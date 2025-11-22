@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraga - Komunitas</title>
+
+        <link rel="stylesheet" href="komunitas.css">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" alt="Logo Saraga" class="logo-img">
+            Saraga
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Cari tips olahraga...">
+        </div>
+        <ul class="nav-menu">
+            <li><a href="home-udahlogin.html">Home</a></li>
+            <li><a href="komunitas.html" class="active">Komunitas</a></li>
+            <li><a href="sparring.html">Sparring</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="kelola-venue.html">Kelola Venue</a></li>
+        </ul>
+        <div class="user-menu">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://media.discordapp.net/attachments/1387821572051566605/1439955014054576138/image.png?ex=691c661c&is=691b149c&hm=fa6ad40b84ddc0408775f4efe4807766f6279582d4bf8af003f064f06bbd9bc3&=&format=webp&quality=lossless" alt="User">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Sulthan Ghalib</div>
+                    <div class="user-email">sulthan.ghalib3001@student.unri.ac.id</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="komunitas-header">
+            <h1>💬 Komunitas Saraga</h1>
+            <p>Berbagi tips, trik, dan pengalaman olahraga dengan komunitas</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage">
+            <span class="error-icon">⚠️</span>
+            <span id="errorText"></span>
+        </div>
+
+        <!-- New Post Form -->
+        <div class="new-post-card">
+            <h2>✍️ Bagikan Tips Olahraga</h2>
+            <form class="post-form" id="postForm">
+                <div class="form-group">
+                    <label>Judul Tips</label>
+                    <input type="text" id="postTitle" placeholder="Contoh: Tips Meningkatkan Stamina Futsal" required>
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <input type="text" id="postCategory" placeholder="Contoh: Futsal, Badminton, dll." required>
+                </div>
+                <div class="form-group">
+                    <label>Konten Tips</label>
+                    <textarea id="postContent" placeholder="Bagikan tips dan pengalaman Anda..." required></textarea>
+                </div>
+                <div class="post-actions">
+                    <button type="submit" class="btn btn-primary">📤 Posting</button>
+                    <button type="reset" class="btn btn-secondary">🔄 Reset</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="futsal">Futsal</button>
+            <button class="filter-btn" data-filter="badminton">Badminton</button>
+            <button class="filter-btn" data-filter="basketball">Basketball</button>
+            <button class="filter-btn" data-filter="tennis">Tennis</button>
+        </div>
+
+        <!-- Posts Grid -->
+        <div class="posts-grid" id="postsGrid">
+            <!-- Sample Posts -->
+            <div class="post-card" data-post-id="1">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="author-avatar">AM</div>
+                        <div class="author-info">
+                            <h3>Ahmad Maulana</h3>
+                            <span class="post-date">2 jam yang lalu</span>
+                        </div>
+                    </div>
+                    <div class="post-menu" onclick="openReportModal(1)">⋮</div>
+                </div>
+                <span class="post-category">Futsal</span>
+                <h2 class="post-title">Tips Meningkatkan Kontrol Bola Futsal</h2>
+                <p class="post-content">Untuk meningkatkan kontrol bola, latih juggling setiap hari minimal 15 menit. Mulai dengan 10 sentuhan, lalu tingkatkan secara bertahap. Fokus pada sentuhan yang lembut dan konsisten.</p>
+                <div class="post-actions-bar">
+                    <div class="action-group">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span class="icon">❤️</span>
+                            <span class="count">24</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(1)">
+                            <span class="icon">💬</span>
+                            <span class="count">8</span>
+                        </button>
+                    </div>
+                    <button class="action-btn" onclick="openReportModal(1)">
+                        <span class="icon">🚩</span>
+                        <span>Report</span>
+                    </button>
+                </div>
+                <div class="comments-section" id="comments-1">
+                    <div class="comment">
+                        <div class="comment-avatar">RD</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Rizky Dwi</div>
+                            <div class="comment-text">Mantap tipsnya! Udah coba dan hasilnya kelihatan dalam seminggu</div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-avatar">FA</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Fahmi Aditya</div>
+                            <div class="comment-text">Berapa lama biasanya buat mahir kak?</div>
+                        </div>
+                    </div>
+                    <div class="comment-input">
+                        <input type="text" placeholder="Tulis komentar..." id="commentInput-1">
+                        <button onclick="addComment(1)">Kirim</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card" data-post-id="2">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-info">
+                            <h3>Siti Pratiwi</h3>
+                            <span class="post-date">5 jam yang lalu</span>
+                        </div>
+                    </div>
+                    <div class="post-menu" onclick="openReportModal(2)">⋮</div>
+                </div>
+                <span class="post-category">Badminton</span>
+                <h2 class="post-title">Teknik Smash Badminton yang Efektif</h2>
+                <p class="post-content">Kunci smash yang kuat adalah timing dan posisi tubuh. Pastikan lompatan dilakukan di titik tertinggi dengan rotasi pinggang yang maksimal. Latih footwork untuk posisi yang sempurna.</p>
+                <div class="post-actions-bar">
+                    <div class="action-group">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span class="icon">❤️</span>
+                            <span class="count">31</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(2)">
+                            <span class="icon">💬</span>
+                            <span class="count">12</span>
+                        </button>
+                    </div>
+                    <button class="action-btn" onclick="openReportModal(2)">
+                        <span class="icon">🚩</span>
+                        <span>Report</span>
+                    </button>
+                </div>
+                <div class="comments-section" id="comments-2">
+                    <div class="comment-input">
+                        <input type="text" placeholder="Tulis komentar..." id="commentInput-2">
+                        <button onclick="addComment(2)">Kirim</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card" data-post-id="3">
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="author-avatar">BW</div>
+                        <div class="author-info">
+                            <h3>Budi Wicaksono</h3>
+                            <span class="post-date">1 hari yang lalu</span>
+                        </div>
+                    </div>
+                    <div class="post-menu" onclick="openReportModal(3)">⋮</div>
+                </div>
+                <span class="post-category">Basketball</span>
+                <h2 class="post-title">Cara Meningkatkan Akurasi Free Throw</h2>
+                <p class="post-content">Konsistensi adalah kunci! Buat rutinitas sebelum melempar: dribble 3 kali, tarik napas dalam, fokus pada ring, dan lepaskan dengan gerakan pergelangan tangan yang smooth. Latihan 50 free throw setiap hari akan membuat perbedaan besar.</p>
+                <div class="post-actions-bar">
+                    <div class="action-group">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span class="icon">❤️</span>
+                            <span class="count">45</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(3)">
+                            <span class="icon">💬</span>
+                            <span class="count">15</span>
+                        </button>
+                    </div>
+                    <button class="action-btn" onclick="openReportModal(3)">
+                        <span class="icon">🚩</span>
+                        <span>Report</span>
+                    </button>
+                </div>
+                <div class="comments-section" id="comments-3">
+                    <div class="comment-input">
+                        <input type="text" placeholder="Tulis komentar..." id="commentInput-3">
+                        <button onclick="addComment(3)">Kirim</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🚩 Laporkan Postingan</h3>
+                <button class="close-btn" onclick="closeReportModal()">×</button>
+            </div>
+            <div class="report-options">
+                <div class="report-option" onclick="selectReport(this)">
+                    <strong>Spam atau Misleading</strong>
+                    <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.3rem;">Konten yang tidak relevan atau menyesatkan</p>
+                </div>
+                <div class="report-option" onclick="selectReport(this)">
+                    <strong>Konten Tidak Pantas</strong>
+                    <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.3rem;">Mengandung konten yang tidak sesuai</p>
+                </div>
+                <div class="report-option" onclick="selectReport(this)">
+                    <strong>Bahasa Kasar atau Pelecehan</strong>
+                    <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.3rem;">Menggunakan kata-kata kasar atau melecehkan</p>
+                </div>
+                <div class="report-option" onclick="selectReport(this)">
+                    <strong>Informasi Palsu</strong>
+                    <p style="color: #6b7280; font-size: 0.9rem; margin-top: 0.3rem;">Menyebarkan informasi yang salah</p>
+                </div>
+            </div>
+            <div class="post-actions">
+                <button class="btn btn-primary" onclick="submitReport()">Kirim Laporan</button>
+                <button class="btn btn-secondary" onclick="closeReportModal()">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentReportPostId = null;
+        let selectedReportReason = null;
+
+        // Post Form Submission
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('postTitle').value;
+            const category = document.getElementById('postCategory').value;
+            const content = document.getElementById('postContent').value;
+
+            // Simulate network request
+            showLoading();
+            
+            setTimeout(() => {
+                // Simulate success or failure (80% success rate)
+                if (Math.random() > 0.2) {
+                    createNewPost(title, category, content);
+                    document.getElementById('postForm').reset();
+                    hideError();
+                    alert('✅ Tips berhasil diposting!');
+                } else {
+                    showError('Gagal memposting. Koneksi internet bermasalah. Silakan coba lagi.');
+                }
+                hideLoading();
+            }, 1000);
+        });
+
+        // Create New Post
+        function createNewPost(title, category, content) {
+            const postsGrid = document.getElementById('postsGrid');
+            const newPostId = Date.now();
+            
+            const postCard = document.createElement('div');
+            postCard.className = 'post-card';
+            postCard.setAttribute('data-post-id', newPostId);
+            
+            postCard.innerHTML = `
+                <div class="post-header">
+                    <div class="post-author">
+                        <div class="author-avatar">SG</div>
+                        <div class="author-info">
+                            <h3>Sulthan Ghalib</h3>
+                            <span class="post-date">Baru saja</span>
+                        </div>
+                    </div>
+                    <div class="post-menu" onclick="openReportModal(${newPostId})">⋮</div>
+                </div>
+                <span class="post-category">${category}</span>
+                <h2 class="post-title">${title}</h2>
+                <p class="post-content">${content}</p>
+                <div class="post-actions-bar">
+                    <div class="action-group">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span class="icon">❤️</span>
+                            <span class="count">0</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(${newPostId})">
+                            <span class="icon">💬</span>
+                            <span class="count">0</span>
+                        </button>
+                    </div>
+                    <button class="action-btn" onclick="openReportModal(${newPostId})">
+                        <span class="icon">🚩</span>
+                        <span>Report</span>
+                    </button>
+                </div>
+                <div class="comments-section" id="comments-${newPostId}">
+                    <div class="comment-input">
+                        <input type="text" placeholder="Tulis komentar..." id="commentInput-${newPostId}">
+                        <button onclick="addComment(${newPostId})">Kirim</button>
+                    </div>
+                </div>
+            `;
+            
+            postsGrid.insertBefore(postCard, postsGrid.firstChild);
+            
+            // Animate entrance
+            postCard.style.opacity = '0';
+            postCard.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                postCard.style.transition = 'all 0.5s ease';
+                postCard.style.opacity = '1';
+                postCard.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        // Toggle Like
+        function toggleLike(button) {
+            const countSpan = button.querySelector('.count');
+            let count = parseInt(countSpan.textContent);
+            
+            if (button.classList.contains('liked')) {
+                button.classList.remove('liked');
+                count--;
+            } else {
+                button.classList.add('liked');
+                count++;
+            }
+            
+            countSpan.textContent = count;
+        }
+
+        // Toggle Comments
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            
+            if (commentsSection.classList.contains('show')) {
+                commentsSection.classList.remove('show');
+            } else {
+                commentsSection.classList.add('show');
+            }
+        }
+
+        // Add Comment
+        function addComment(postId) {
+            const input = document.getElementById(`commentInput-${postId}`);
+            const commentText = input.value.trim();
+            
+            if (!commentText) {
+                alert('⚠️ Komentar tidak boleh kosong!');
+                return;
+            }
+
+            // Simulate network request
+            showLoading();
+            
+            setTimeout(() => {
+                // Simulate success or failure (85% success rate)
+                if (Math.random() > 0.15) {
+                    const commentsSection = document.getElementById(`comments-${postId}`);
+                    const commentInput = commentsSection.querySelector('.comment-input');
+                    
+                    const newComment = document.createElement('div');
+                    newComment.className = 'comment';
+                    newComment.innerHTML = `
+                        <div class="comment-avatar">SG</div>
+                        <div class="comment-content">
+                            <div class="comment-author">Sulthan Ghalib</div>
+                            <div class="comment-text">${commentText}</div>
+                        </div>
+                    `;
+                    
+                    commentsSection.insertBefore(newComment, commentInput);
+                    
+                    // Update comment count
+                    const postCard = commentsSection.closest('.post-card');
+                    const commentBtn = postCard.querySelector('.action-btn:nth-child(2) .count');
+                    commentBtn.textContent = parseInt(commentBtn.textContent) + 1;
+                    
+                    input.value = '';
+                    hideError();
+                } else {
+                    showError('Gagal mengirim komentar. Koneksi internet bermasalah. Silakan coba lagi.');
+                }
+                hideLoading();
+            }, 800);
+        }
+
+        // Report Modal Functions
+        function openReportModal(postId) {
+            currentReportPostId = postId;
+            selectedReportReason = null;
+            document.getElementById('reportModal').classList.add('show');
+            
+            // Reset selections
+            document.querySelectorAll('.report-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.remove('show');
+            currentReportPostId = null;
+            selectedReportReason = null;
+        }
+
+        function selectReport(element) {
+            document.querySelectorAll('.report-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedReportReason = element.querySelector('strong').textContent;
+        }
+
+        function submitReport() {
+            if (!selectedReportReason) {
+                alert('⚠️ Silakan pilih alasan pelaporan!');
+                return;
+            }
+
+            // Simulate network request
+            showLoading();
+            closeReportModal();
+            
+            setTimeout(() => {
+                // Simulate success or failure (90% success rate)
+                if (Math.random() > 0.1) {
+                    alert(`✅ Laporan berhasil dikirim!\nAlasan: ${selectedReportReason}\nTerima kasih atas kontribusi Anda menjaga komunitas tetap aman.`);
+                    hideError();
+                } else {
+                    showError('Gagal mengirim laporan. Koneksi internet bermasalah. Silakan coba lagi.');
+                }
+                hideLoading();
+            }, 1000);
+        }
+
+        // Filter Functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const posts = document.querySelectorAll('.post-card');
+                
+                posts.forEach(post => {
+                    const category = post.querySelector('.post-category').textContent.toLowerCase();
+                    
+                    if (filter === 'all' || category === filter) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search Functionality
+        document.querySelector('.search-box').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const posts = document.querySelectorAll('.post-card');
+            
+            posts.forEach(post => {
+                const title = post.querySelector('.post-title').textContent.toLowerCase();
+                const content = post.querySelector('.post-content').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        });
+
+        // Error Handling Functions
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.classList.add('show');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                hideError();
+            }, 5000);
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        // Loading State
+        let loadingCount = 0;
+
+        function showLoading() {
+            loadingCount++;
+            if (loadingCount === 1) {
+                document.body.style.cursor = 'wait';
+            }
+        }
+
+        function hideLoading() {
+            loadingCount--;
+            if (loadingCount === 0) {
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('reportModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeReportModal();
+            }
+        });
+
+        // Handle Enter key in comment inputs
+        document.addEventListener('keypress', function(e) {
+            if (e.target.matches('[id^="commentInput-"]') && e.key === 'Enter') {
+                const postId = e.target.id.split('-')[1];
+                addComment(postId);
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

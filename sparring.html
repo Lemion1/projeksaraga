@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraga - Find Your Sparring Partner</title>
+    <link rel="stylesheet" href="sparring.css">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" alt="Logo Saraga" class="logo-img">
+            Saraga
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Cari partner atau olahraga...">
+        </div>
+        <ul class="nav-menu">
+            <li><a href="home-udahlogin.html">Home</a></li>
+            <li><a href="komunitas.html">Komunitas</a></li>
+            <li><a href="#sparring" class="active">Sparring</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="kelola-venue.html">Kelola Venue</a></li>
+        </ul>
+        
+        <div class="user-menu">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://media.discordapp.net/attachments/1387821572051566605/1439955014054576138/image.png?ex=691c661c&is=691b149c&hm=fa6ad40b84ddc0408775f4efe4807766f6279582d4bf8af003f064f06bbd9bc3&=&format=webp&quality=lossless" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Sulthan Ghalib</div>
+                    <div class="user-email">sulthan.ghalib3001@student.unri.ac.id</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Find Your Perfect Sparring Partner 🤝</h1>
+        <p>Connect with athletes who match your skill level and schedule</p>
+    </section>
+
+    <!-- Search Filter -->
+    <div class="search-filter">
+        <div class="filter-card">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Jenis Olahraga</label>
+                    <select id="sportFilter">
+                        <option value="">Semua Olahraga</option>
+                        <option value="futsal">Futsal</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="badminton">Badminton</option>
+                        <option value="tennis">Tennis</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Lokasi</label>
+                    <select id="locationFilter">
+                        <option value="">Semua Lokasi</option>
+                        <option value="tengkerang">Tengkerang</option>
+                        <option value="tampan">Tampan</option>
+                        <option value="marpoyan">Marpoyan Damai</option>
+                        <option value="payung">Payung Sekaki</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Level</label>
+                    <select id="levelFilter">
+                        <option value="">Semua Level</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Jadwal</label>
+                    <input type="date" id="scheduleFilter">
+                </div>
+            </div>
+            <button class="search-btn" onclick="searchPartners()">🔍 Cari Partner</button>
+        </div>
+    </div>
+
+    <!-- Partners Section -->
+    <div class="partners-section">
+        <div class="section-header">
+            <h2>Available Partners</h2>
+            <div class="results-count" id="resultsCount">12 partners found</div>
+        </div>
+
+        <div class="partners-grid" id="partnersGrid">
+            <!-- Partner Cards will be dynamically generated -->
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-icon">😔</div>
+            <h3>Tidak Ada Partner Tersedia</h3>
+            <p>Coba ubah kriteria pencarian Anda atau periksa kembali nanti</p>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Profile Partner</h2>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Profile details will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">✅</div>
+        <div class="notification-content">
+            <h4 id="notifTitle">Undangan Terkirim!</h4>
+            <p id="notifMessage">Undangan sparring telah dikirim ke partner</p>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const partners = [
+            {
+                id: 1,
+                name: "Ahmad Rizki",
+                sport: "Futsal",
+                location: "Tengkerang Utara",
+                level: "advanced",
+                rating: 4.8,
+                matches: 45,
+                winRate: 72,
+                avatar: "https://i.pravatar.cc/150?img=12",
+                experience: "5 tahun",
+                availability: "Senin - Jumat, 18:00 - 21:00",
+                preferredVenue: "Latansa Futsal",
+                bio: "Pemain futsal berpengalaman, suka bermain posisi striker"
+            },
+            {
+                id: 2,
+                name: "Budi Santoso",
+                sport: "Basketball",
+                location: "Tampan",
+                level: "intermediate",
+                rating: 4.5,
+                matches: 32,
+                winRate: 65,
+                avatar: "https://i.pravatar.cc/150?img=13",
+                experience: "3 tahun",
+                availability: "Weekend, 09:00 - 12:00",
+                preferredVenue: "3S Arena",
+                bio: "Point guard yang suka fast break dan three-point shots"
+            },
+            {
+                id: 3,
+                name: "Citra Dewi",
+                sport: "Badminton",
+                location: "Tengkerang Selatan",
+                level: "intermediate",
+                rating: 4.6,
+                matches: 38,
+                winRate: 68,
+                avatar: "https://i.pravatar.cc/150?img=25",
+                experience: "4 tahun",
+                availability: "Selasa & Kamis, 19:00 - 21:00",
+                preferredVenue: "GOR Badminton SAS",
+                bio: "Atlet badminton dengan specialty di permainan ganda"
+            },
+            {
+                id: 4,
+                name: "Doni Prakoso",
+                sport: "Futsal",
+                location: "Marpoyan Damai",
+                level: "beginner",
+                rating: 4.2,
+                matches: 15,
+                winRate: 55,
+                avatar: "https://i.pravatar.cc/150?img=33",
+                experience: "1 tahun",
+                availability: "Weekend, 16:00 - 18:00",
+                preferredVenue: "Latansa Futsal",
+                bio: "Pemula yang ingin belajar dan meningkatkan skill futsal"
+            },
+            {
+                id: 5,
+                name: "Eka Putri",
+                sport: "Tennis",
+                location: "Payung Sekaki",
+                level: "advanced",
+                rating: 4.9,
+                matches: 52,
+                winRate: 78,
+                avatar: "https://i.pravatar.cc/150?img=45",
+                experience: "6 tahun",
+                availability: "Senin - Jumat, 06:00 - 08:00",
+                preferredVenue: "Tennis Court Rumbai",
+                bio: "Mantan atlet tenis sekolah, suka bermain baseline"
+            },
+            {
+                id: 6,
+                name: "Fajar Rahman",
+                sport: "Basketball",
+                location: "Tampan",
+                level: "advanced",
+                rating: 4.7,
+                matches: 48,
+                winRate: 73,
+                avatar: "https://i.pravatar.cc/150?img=52",
+                experience: "5 tahun",
+                availability: "Rabu & Jumat, 18:00 - 20:00",
+                preferredVenue: "3S Arena",
+                bio: "Center dengan defense yang kuat dan rebound bagus"
+            }
+        ];
+
+        let filteredPartners = [...partners];
+
+        // Render partners
+        function renderPartners(data) {
+            const grid = document.getElementById('partnersGrid');
+            const emptyState = document.getElementById('emptyState');
+            const resultsCount = document.getElementById('resultsCount');
+
+            if (data.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                resultsCount.textContent = '0 partners found';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            resultsCount.textContent = `${data.length} partners found`;
+
+            grid.innerHTML = data.map(partner => `
+                <div class="partner-card">
+                    <div class="partner-header">
+                        <div class="partner-avatar">
+                            <img src="${partner.avatar}" alt="${partner.name}">
+                        </div>
+                        <div class="partner-name">${partner.name}</div>
+                        <div class="partner-sport">${partner.sport}</div>
+                    </div>
+                    <div class="partner-body">
+                        <div class="partner-info">
+                            <div class="info-row">
+                                <span class="info-icon">📍</span>
+                                <span>${partner.location}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-icon">🎯</span>
+                                <span class="level-badge ${partner.level}">${partner.level.toUpperCase()}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-icon">⭐</span>
+                                <span>${partner.rating} Rating</span>
+                            </div>
+                        </div>
+                        <div class="partner-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${partner.matches}</div>
+                                <div class="stat-label">Matches</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${partner.winRate}%</div>
+                                <div class="stat-label">Win Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${partner.rating}</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                        <div class="partner-actions">
+                            <button class="btn-view" onclick="viewProfile(${partner.id})">View Profile</button>
+                            <button class="btn-invite" onclick="sendInvite(${partner.id})">Kirim Undangan</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search partners
+        function searchPartners() {
+            const sport = document.getElementById('sportFilter').value.toLowerCase();
+            const location = document.getElementById('locationFilter').value.toLowerCase();
+            const level = document.getElementById('levelFilter').value.toLowerCase();
+
+            filteredPartners = partners.filter(partner => {
+                const sportMatch = !sport || partner.sport.toLowerCase().includes(sport);
+                const locationMatch = !location || partner.location.toLowerCase().includes(location);
+                const levelMatch = !level || partner.level === level;
+                
+                return sportMatch && locationMatch && levelMatch;
+            });
+
+            renderPartners(filteredPartners);
+        }
+
+        // View profile
+        function viewProfile(id) {
+            const partner = partners.find(p => p.id === id);
+            const modal = document.getElementById('profileModal');
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 15px;">
+                        <img src="${partner.avatar}" style="width: 100%; height: 100%; object-fit: cover;" alt="${partner.name}">
+                    </div>
+                    <h2 style="margin-bottom: 5px;">${partner.name}</h2>
+                    <span class="level-badge ${partner.level}">${partner.level.toUpperCase()}</span>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Informasi Dasar</h3>
+                    <div class="profile-detail">
+                        <span class="profile-label">Olahraga</span>
+                        <span class="profile-value">${partner.sport}</span>
+                    </div>
+                    <div class="profile-detail">
+                        <span class="profile-label">Lokasi</span>
+                        <span class="profile-value">${partner.location}</span>
+                    </div>
+                    <div class="profile-detail">
+                        <span class="profile-label">Pengalaman</span>
+                        <span class="profile-value">${partner.experience}</span>
+                    </div>
+                    <div class="profile-detail">
+                        <span class="profile-label">Rating</span>
+                        <span class="profile-value">⭐ ${partner.rating}</span>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Statistik</h3>
+                    <div class="profile-detail">
+                        <span class="profile-label">Total Matches</span>
+                        <span class="profile-value">${partner.matches} matches</span>
+                    </div>
+                    <div class="profile-detail">
+                        <span class="profile-label">Win Rate</span>
+                        <span class="profile-value">${partner.winRate}%</span>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Ketersediaan</h3>
+                    <div class="profile-detail">
+                        <span class="profile-label">Jadwal</span>
+                        <span class="profile-value">${partner.availability}</span>
+                    </div>
+                    <div class="profile-detail">
+                        <span class="profile-label">Venue Favorit</span>
+                        <span class="profile-value">${partner.preferredVenue}</span>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Bio</h3>
+                    <p style="color: #666; line-height: 1.6;">${partner.bio}</p>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-close" onclick="closeModal()">Tutup</button>
+                    <button class="btn-send-invite" onclick="sendInvite(${partner.id}); closeModal();">Kirim Undangan Sparring</button>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        // Send invite
+        function sendInvite(id) {
+            const partner = partners.find(p => p.id === id);
+            
+            // Simulate sending invitation
+            showNotification(
+                'Undangan Terkirim! ✅',
+                `Undangan sparring telah dikirim ke ${partner.name}`
+            );
+
+            // Simulate random response after 3 seconds
+            setTimeout(() => {
+                const accepted = Math.random() > 0.3; // 70% chance accepted
+                
+                if (accepted) {
+                    showNotification(
+                        'Undangan Diterima! 🎉',
+                        `${partner.name} menerima undangan Anda. Match telah dibuat!`
+                    );
+                } else {
+                    showNotification(
+                        'Undangan Ditolak 😔',
+                        `${partner.name} menolak undangan karena jadwal tidak sesuai`
+                    );
+                }
+            }, 3000);
+        }
+
+        // Show notification
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notifTitle').textContent = title;
+            document.getElementById('notifMessage').textContent = message;
+            
+            notification.classList.add('active');
+            
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 4000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('profileModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        renderPartners(filteredPartners);
+    </script>
+</body>
+</html>

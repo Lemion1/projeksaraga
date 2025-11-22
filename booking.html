@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraga - My Bookings</title>
+    <link rel="stylesheet" href="booking.css" />
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" alt="Logo Saraga" class="logo-img">
+            Saraga
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Cari lapangan atau lokasi...">
+        </div>
+        <ul class="nav-menu">
+            <li><a href="home-udahlogin.html">Home</a></li>
+            <li><a href="komunitas.html">Komunitas</a></li>
+            <li><a href="sparring.html">Sparring</a></li>
+            <li><a href="booking.html" class="active">Booking</a></li>
+            <li><a href="kelola-venue.html">Kelola Venue</a></li>
+        </ul>
+        
+        <div class="user-menu">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://media.discordapp.net/attachments/1387821572051566605/1439955014054576138/image.png?ex=691c661c&is=691b149c&hm=fa6ad40b84ddc0408775f4efe4807766f6279582d4bf8af003f064f06bbd9bc3&=&format=webp&quality=lossless" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Sulthan Ghalib</div>
+                    <div class="user-email">sulthan.ghalib3001@student.unri.ac.id</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>My Bookings 📅</h1>
+            <p>Kelola dan lihat semua pesanan venue Anda</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('active')">
+                Aktif
+                <span class="tab-badge" id="activeCount">1</span>
+            </button>
+            <button class="tab" onclick="switchTab('completed')">
+                Selesai
+                <span class="tab-badge" id="completedCount">2</span>
+            </button>
+        </div>
+
+        <!-- Active Bookings Tab -->
+        <div id="activeTab" class="tab-content active">
+            <div class="bookings-grid" id="activeBookings">
+                <!-- Active bookings will be rendered here -->
+            </div>
+            <div class="empty-state" id="emptyActive" style="display: none;">
+                <div class="empty-icon">📅</div>
+                <h2 class="empty-title">Belum Ada Pesanan</h2>
+                <p class="empty-description">Anda belum memiliki booking aktif saat ini. Mulai booking venue favorit Anda sekarang!</p>
+                <a href="home-udahlogin.html" class="btn-booking-now">
+                    🏟️ Booking Sekarang
+                </a>
+            </div>
+        </div>
+
+        <!-- Completed Bookings Tab -->
+        <div id="completedTab" class="tab-content">
+            <div class="bookings-grid" id="completedBookings">
+                <!-- Completed bookings will be rendered here -->
+            </div>
+            <div class="empty-state" id="emptyCompleted" style="display: none;">
+                <div class="empty-icon">✅</div>
+                <h2 class="empty-title">Belum Ada Pesanan Selesai</h2>
+                <p class="empty-description">Riwayat booking yang telah selesai akan muncul di sini.</p>
+                <a href="home-udahlogin.html" class="btn-booking-now">
+                    🏟️ Booking Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Modal -->
+    <div class="modal" id="cancelModal">
+        <div class="modal-content">
+            <div class="modal-header">Batalkan Booking?</div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin membatalkan booking ini? Tindakan ini tidak dapat dibatalkan dan dana akan dikembalikan sesuai dengan kebijakan pembatalan.
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Kembali</button>
+                <button class="btn btn-danger" onclick="confirmCancel()">Ya, Batalkan</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample booking data
+        const bookingsData = {
+            active: [
+                {
+                    id: 1,
+                    venueName: "Latansa Futsal Pekanbaru",
+                    location: "Tengkerang Utara, Pekanbaru",
+                    date: "20 November 2025",
+                    time: "18:00 - 20:00",
+                    duration: "2 jam",
+                    field: "Lapangan A",
+                    bookingId: "BKG-20251120-001",
+                    price: "Rp 160.000",
+                    status: "upcoming",
+                    statusText: "Upcoming"
+                }
+            ],
+            completed: [
+                {
+                    id: 2,
+                    venueName: "GOR Badminton SAS",
+                    location: "Tengkerang Selatan, Pekanbaru",
+                    date: "15 November 2025",
+                    time: "19:00 - 21:00",
+                    duration: "2 jam",
+                    field: "Court 1",
+                    bookingId: "BKG-20251115-002",
+                    price: "Rp 160.000",
+                    status: "completed",
+                    statusText: "Completed"
+                },
+                {
+                    id: 3,
+                    venueName: "Lapangan Basket 3S Arena",
+                    location: "Payung Sekaki, Pekanbaru",
+                    date: "10 November 2025",
+                    time: "10:00 - 12:00",
+                    duration: "2 jam",
+                    field: "Full Court",
+                    bookingId: "BKG-20251110-003",
+                    price: "Rp 160.000",
+                    status: "completed",
+                    statusText: "Completed"
+                }
+            ]
+        };
+
+        let selectedBookingId = null;
+
+        // Render bookings
+        function renderBookings() {
+            renderActiveBookings();
+            renderCompletedBookings();
+            updateCounts();
+        }
+
+        function renderActiveBookings() {
+            const container = document.getElementById('activeBookings');
+            const emptyState = document.getElementById('emptyActive');
+            
+            if (bookingsData.active.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = bookingsData.active.map(booking => `
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-venue">
+                            <div class="venue-name">${booking.venueName}</div>
+                            <div class="venue-location">
+                                <span>📍</span>
+                                <span>${booking.location}</span>
+                            </div>
+                        </div>
+                        <div class="booking-status status-${booking.status}">${booking.statusText}</div>
+                    </div>
+
+                    <div class="booking-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Booking ID</div>
+                            <div class="detail-value">${booking.bookingId}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Tanggal</div>
+                            <div class="detail-value">${booking.date}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Waktu</div>
+                            <div class="detail-value">${booking.time}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Lapangan</div>
+                            <div class="detail-value">${booking.field}</div>
+                        </div>
+                    </div>
+
+                    <div class="booking-footer">
+                        <div class="booking-price">
+                            <div class="price-label">Total Pembayaran</div>
+                            <div class="price-value">${booking.price}</div>
+                        </div>
+                        <div class="booking-actions">
+                            <button class="btn btn-secondary" onclick="viewDetails(${booking.id})">Detail</button>
+                            <button class="btn btn-danger" onclick="openCancelModal(${booking.id})">Batalkan</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderCompletedBookings() {
+            const container = document.getElementById('completedBookings');
+            const emptyState = document.getElementById('emptyCompleted');
+            
+            if (bookingsData.completed.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = bookingsData.completed.map(booking => `
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-venue">
+                            <div class="venue-name">${booking.venueName}</div>
+                            <div class="venue-location">
+                                <span>📍</span>
+                                <span>${booking.location}</span>
+                            </div>
+                        </div>
+                        <div class="booking-status status-${booking.status}">${booking.statusText}</div>
+                    </div>
+
+                    <div class="booking-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Booking ID</div>
+                            <div class="detail-value">${booking.bookingId}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Tanggal</div>
+                            <div class="detail-value">${booking.date}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Waktu</div>
+                            <div class="detail-value">${booking.time}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Lapangan</div>
+                            <div class="detail-value">${booking.field}</div>
+                        </div>
+                    </div>
+
+                    <div class="booking-footer">
+                        <div class="booking-price">
+                            <div class="price-label">Total Pembayaran</div>
+                            <div class="price-value">${booking.price}</div>
+                        </div>
+                        <div class="booking-actions">
+                            <button class="btn btn-secondary" onclick="viewDetails(${booking.id})">Detail</button>
+                            <button class="btn btn-primary" onclick="bookAgain(${booking.id})">Booking Lagi</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateCounts() {
+            document.getElementById('activeCount').textContent = bookingsData.active.length;
+            document.getElementById('completedCount').textContent = bookingsData.completed.length;
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            if (tabName === 'active') {
+                document.getElementById('activeTab').classList.add('active');
+            } else {
+                document.getElementById('completedTab').classList.add('active');
+            }
+        }
+
+        // Modal functions
+        function openCancelModal(bookingId) {
+            selectedBookingId = bookingId;
+            document.getElementById('cancelModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('cancelModal').classList.remove('active');
+            selectedBookingId = null;
+        }
+
+        function confirmCancel() {
+            if (selectedBookingId) {
+                // Move booking to completed with cancelled status
+                const bookingIndex = bookingsData.active.findIndex(b => b.id === selectedBookingId);
+                if (bookingIndex !== -1) {
+                    const cancelledBooking = bookingsData.active.splice(bookingIndex, 1)[0];
+                    cancelledBooking.status = 'cancelled';
+                    cancelledBooking.statusText = 'Cancelled';
+                    bookingsData.completed.unshift(cancelledBooking);
+                    
+                    renderBookings();
+                    alert('Booking berhasil dibatalkan. Dana akan dikembalikan sesuai kebijakan.');
+                }
+            }
+            closeModal();
+        }
+
+        // Action functions
+        function viewDetails(bookingId) {
+            alert(`Menampilkan detail booking ID: ${bookingId}`);
+        }
+
+        function bookAgain(bookingId) {
+            alert(`Redirect ke halaman booking untuk venue yang sama`);
+            // window.location.href = 'bookpage-1.html';
+        }
+
+        // Initialize
+        renderBookings();
+
+        // Close modal when clicking outside
+        document.getElementById('cancelModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

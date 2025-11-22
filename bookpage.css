@@ -1,0 +1,452 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.back-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.back-btn:hover {
+    background: #5568d3;
+}
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+}
+
+.venue-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.venue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 20px;
+}
+
+.venue-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a202c;
+    margin-bottom: 8px;
+}
+
+.venue-location {
+    color: #718096;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px; /* NEW: Menambahkan margin bottom untuk tombol Maps */
+}
+
+/* NEW: Tombol Maps */
+.btn-maps {
+    width: 100%;
+    padding: 12px;
+    background: #4285f4; /* Warna biru Google Maps */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    margin-top: 5px;
+}
+
+.btn-maps:hover {
+    background: #3c78d8;
+    transform: translateY(-1px);
+}
+/* END NEW MAPS BUTTON */
+
+.price-tag {
+    background: #667eea;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.price-amount {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.price-label {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.status-available {
+    background: #c6f6d5;
+    color: #22543d;
+}
+
+.status-limited {
+    background: #fed7d7;
+    color: #742a2a;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: #4a5568;
+}
+
+.schedule-section {
+    margin-top: 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2d3748;
+}
+
+.date-picker {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.date-picker input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.time-slot {
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+}
+
+.time-slot:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.time-slot.available {
+    border-color: #48bb78;
+}
+
+.time-slot.available:hover {
+    background: #f0fff4;
+}
+
+.time-slot.selected {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.time-slot.booked {
+    background: #fed7d7;
+    border-color: #fc8181;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.time-slot-time {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.time-slot-status {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.cart-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.cart-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #1a202c;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #a0aec0;
+}
+
+.cart-item {
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.cart-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+.cart-item-venue {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.cart-item-remove {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.cart-item-details {
+    font-size: 13px;
+    color: #718096;
+    margin-bottom: 8px;
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 16px;
+}
+
+.cart-summary {
+    border-top: 2px solid #e2e8f0;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #4a5568;
+}
+
+.summary-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a202c;
+}
+
+.payment-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e2e8f0;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.payment-method {
+    padding: 15px 10px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 24px;
+}
+
+.payment-method:hover {
+    border-color: #667eea;
+}
+
+.payment-method.selected {
+    border-color: #667eea;
+    background: #eef2ff;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.checkout-btn:hover {
+    background: #5568d3;
+}
+
+.checkout-btn:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+}
+
+.confirmation {
+    background: #c6f6d5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: none;
+}
+
+.confirmation.show {
+    display: block;
+}
+
+.confirmation-title {
+    color: #22543d;
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.confirmation-text {
+    color: #2f855a;
+    font-size: 13px;
+}
+
+/* NEW: Style untuk Modal Sukses (Menggantikan Alert) */
+.modal-booking-success {
+    display: none; /* Default tersembunyi */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-booking-success.active {
+    display: flex;
+}
+
+.modal-content-success {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.modal-title-success {
+    font-size: 24px;
+    font-weight: bold;
+    color: #27ae60;
+    margin-bottom: 10px;
+}
+
+.modal-body-success {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+/* END NEW MODAL STYLE */
+
+@media (max-width: 968px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-section {
+        position: static;
+    }
+}

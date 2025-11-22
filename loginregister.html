@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraga - Login & Register</title>
+    <link rel="stylesheet" href="loginregister.css">
+</head>
+
+<body>
+<!-- Login Page -->
+    <div class="auth-container page active" id="loginPage">
+        <div class="auth-right">
+            <div class="logo-header">
+                   <img 
+        src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" 
+        alt="Logo Saraga" 
+        class="logo-img">
+                <div class="logo-text">Saraga</div>
+            </div>
+            
+            <h1>Login</h1>
+            
+            <button class="google-btn" onclick="loginWithGoogle()">
+                <svg width="20" height="20" viewBox="0 0 20 20">
+                    <path fill="#4285F4" d="M19.6 10.23c0-.82-.1-1.42-.25-2.05H10v3.72h5.5c-.15.96-.74 2.31-2.04 3.22v2.45h3.16c1.89-1.73 2.98-4.3 2.98-7.34z"/>
+                    <path fill="#34A853" d="M13.46 15.13c-.83.59-1.96 1-3.46 1-2.64 0-4.88-1.74-5.68-4.15H1.07v2.52C2.72 17.75 6.09 20 10 20c2.7 0 4.96-.89 6.62-2.42l-3.16-2.45z"/>
+                    <path fill="#FBBC05" d="M3.99 10c0-.69.12-1.35.32-1.97V5.51H1.07A9.973 9.973 0 000 10c0 1.61.39 3.14 1.07 4.49l3.24-2.52c-.2-.62-.32-1.28-.32-1.97z"/>
+                    <path fill="#EA4335" d="M10 3.88c1.88 0 3.13.81 3.85 1.48l2.84-2.76C14.96.99 12.7 0 10 0 6.09 0 2.72 2.25 1.07 5.51l3.24 2.52C5.12 5.62 7.36 3.88 10 3.88z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <div class="divider">atau</div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                        <span class="password-toggle" onclick="togglePassword('loginPassword')">👁️</span>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#" onclick="alert('Fitur lupa password akan segera hadir!'); return false;">Forgot Password?</a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+        
+        <div class="auth-left">
+            <div class="auth-icon">👤</div>
+            <h2>New Here?</h2>
+            <p>Nikmati kemudahan berolahraga dengan Saraga, tempat di mana kamu bisa menemukan dan memesan berbagai fasilitas olahraga hanya dengan beberapa klik</p>
+            <button class="switch-btn" onclick="showRegister()">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Register Step 1: Email Verification -->
+    <div class="auth-container page" id="registerStep1">
+        <div class="auth-left">
+            <div class="auth-icon">✉️</div>
+            <h2>Already have an account?</h2>
+            <p>Nikmati kemudahan berolahraga dengan Saraga, tempat di mana kamu bisa menemukan dan memesan berbagai fasilitas olahraga hanya dengan beberapa klik.</p>
+            <button class="switch-btn" onclick="showLogin()">Sign In</button>
+        </div>
+        
+        <div class="auth-right">
+            <div class="logo-header">
+                   <img 
+        src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" 
+        alt="Logo Saraga" 
+        class="logo-img">
+                <div class="logo-text">Saraga</div>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step active">1</div>
+                <div class="step">2</div>
+                <div class="step">3</div>
+            </div>
+
+            <h1>Verifikasi Email</h1>
+            
+            <button class="google-btn" onclick="registerWithGoogle()">
+                <svg width="20" height="20" viewBox="0 0 20 20">
+                    <path fill="#4285F4" d="M19.6 10.23c0-.82-.1-1.42-.25-2.05H10v3.72h5.5c-.15.96-.74 2.31-2.04 3.22v2.45h3.16c1.89-1.73 2.98-4.3 2.98-7.34z"/>
+                    <path fill="#34A853" d="M13.46 15.13c-.83.59-1.96 1-3.46 1-2.64 0-4.88-1.74-5.68-4.15H1.07v2.52C2.72 17.75 6.09 20 10 20c2.7 0 4.96-.89 6.62-2.42l-3.16-2.45z"/>
+                    <path fill="#FBBC05" d="M3.99 10c0-.69.12-1.35.32-1.97V5.51H1.07A9.973 9.973 0 000 10c0 1.61.39 3.14 1.07 4.49l3.24-2.52c-.2-.62-.32-1.28-.32-1.97z"/>
+                    <path fill="#EA4335" d="M10 3.88c1.88 0 3.13.81 3.85 1.48l2.84-2.76C14.96.99 12.7 0 10 0 6.09 0 2.72 2.25 1.07 5.51l3.24 2.52C5.12 5.62 7.36 3.88 10 3.88z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <div class="divider">atau</div>
+            
+            <form id="emailForm">
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" class="form-control" placeholder="Enter your email address" required>
+                    <div class="error-message" id="emailError"></div>
+                    <div class="success-message" id="emailSuccess"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send OTP</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Step 2: OTP Verification -->
+    <div class="auth-container page" id="registerStep2">
+        <div class="auth-left">
+            <div class="auth-icon">🔐</div>
+            <h2>Verifikasi Kode OTP</h2>
+            <p>Kami telah mengirimkan kode 4 digit ke email Anda. Silakan periksa inbox atau folder spam.</p>
+        </div>
+        
+        <div class="auth-right">
+            <div class="logo-header">
+                <div class="logo">S</div>
+                <div class="logo-text">Saraga</div>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step completed">✓</div>
+                <div class="step active">2</div>
+                <div class="step">3</div>
+            </div>
+
+            <h1>Masukkan Kode OTP</h1>
+            <p style="color: #666; margin-bottom: 20px;">Kode dikirim ke <strong id="displayEmail"></strong></p>
+            
+            <form id="otpForm">
+                <div class="otp-inputs">
+                    <input type="text" class="otp-input" maxlength="1" id="otp1">
+                    <input type="text" class="otp-input" maxlength="1" id="otp2">
+                    <input type="text" class="otp-input" maxlength="1" id="otp3">
+                    <input type="text" class="otp-input" maxlength="1" id="otp4">
+                </div>
+                
+                <div class="error-message" id="otpError"></div>
+                <div class="success-message" id="otpSuccess"></div>
+                
+                <div class="timer">
+                    <span id="timerText">Kode akan kadaluarsa dalam <strong id="countdown">5:00</strong></span>
+                    <br>
+                    <span class="resend-link disabled" id="resendLink">Kirim Ulang Kode</span>
+                </div>
+                
+                <button type="submit" class="submit-btn">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Step 3: Personal Information -->
+    <div class="auth-container page" id="registerStep3">
+        <div class="auth-left">
+            <div class="auth-icon">📝</div>
+            <h2>Hampir Selesai!</h2>
+            <p>Lengkapi data pribadi Anda untuk menyelesaikan registrasi dan mulai menikmati layanan Saraga.</p>
+        </div>
+        
+        <div class="auth-right">
+            <div class="logo-header">
+                <div class="logo">S</div>
+                <div class="logo-text">Saraga</div>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step completed">✓</div>
+                <div class="step completed">✓</div>
+                <div class="step active">3</div>
+            </div>
+
+            <h1>Data Pribadi</h1>
+            
+            <form id="personalDataForm">
+                <div class="form-group">
+                    <label for="fullName">Nama Lengkap</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="Masukkan nama lengkap" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phoneNumber">Nomor Telepon</label>
+                    <input type="tel" id="phoneNumber" class="form-control" placeholder="08xxxxxxxxxx" required pattern="[0-9]{10,13}">
+                    <div class="error-message" id="phoneError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Jenis Kelamin</label>
+                    <div class="gender-options">
+                        <div class="gender-option" onclick="selectGender('male')">
+                            <div id="male-icon">👨</div>
+                            <div>Laki-laki</div>
+                        </div>
+                        <div class="gender-option" onclick="selectGender('female')">
+                            <div id="female-icon">👩</div>
+                            <div>Perempuan</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="gender" required>
+                    <div class="error-message" id="genderError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newPassword">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="newPassword" class="form-control" placeholder="Min 8 karakter" required minlength="8">
+                        <span class="password-toggle" onclick="togglePassword('newPassword')">👁️</span>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Konfirmasi Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Ulangi password" required>
+                        <span class="password-toggle" onclick="togglePassword('confirmPassword')">👁️</span>
+                    </div>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="termsCheckbox" required>
+                    <label for="termsCheckbox">
+                        Saya setuju dengan <a href="#" onclick="alert('Terms & Conditions akan segera hadir!'); return false;">Terms & Conditions</a> dan <a href="#" onclick="alert('Privacy Policy akan segera hadir!'); return false;">Privacy Policy</a>
+                    </label>
+                </div>
+                <div class="error-message" id="termsError"></div>
+                
+                <button type="submit" class="submit-btn">Complete Registration</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let registrationData = {
+            email: '',
+            otp: '',
+            generatedOTP: '',
+            otpExpiry: null
+        };
+        let selectedGender = '';
+        let otpTimer;
+        let countdownSeconds = 300; // 5 minutes
+
+        // Show/Hide pages
+        function showLogin() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('loginPage').classList.add('active');
+        }
+
+        function showRegister() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('registerStep1').classList.add('active');
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`registerStep${step}`).classList.add('active');
+        }
+
+        // Toggle Password
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        // Gender selection
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.getElementById('gender').value = gender;
+            document.querySelectorAll('.gender-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            event.target.closest('.gender-option').classList.add('selected');
+            hideError('genderError');
+        }
+
+        // Error handling
+        function showError(elementId, message) {
+            const errorEl = document.getElementById(elementId);
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+
+        function hideError(elementId) {
+            const errorEl = document.getElementById(elementId);
+            errorEl.classList.remove('show');
+        }
+
+        function showSuccess(elementId, message) {
+            const successEl = document.getElementById(elementId);
+            successEl.textContent = message;
+            successEl.classList.add('show');
+            setTimeout(() => successEl.classList.remove('show'), 3000);
+        }
+
+// Email validation and OTP generation
+document.getElementById('emailForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    hideError('emailError');
+
+    const email = document.getElementById('regEmail').value;
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showError('emailError', 'Format email tidak valid!');
+        return;
+    }
+
+    // Check if email already exists
+    const existingUsers = JSON.parse(localStorage.getItem('saragaUsers') || '[]');
+    if (existingUsers.find(u => u.email === email)) {
+        showError('emailError', 'Email sudah terdaftar! Silakan login.');
+        return;
+    }
+
+    // Generate OTP (fixed 4 digits: 1211)
+    registrationData.email = email;
+    registrationData.generatedOTP = "1211";  // OTP tetap 4 digit
+    registrationData.otpExpiry = Date.now() + 300000; // 5 menit
+
+    // Simulate sending OTP (in production, this would be done via backend)
+    console.log('=== OTP SIMULATION ===');
+    console.log('Email:', email);
+    console.log('OTP Code:', registrationData.generatedOTP);
+    console.log('======================');
+
+    showSuccess('emailSuccess', 'OTP telah dikirim ke email Anda! (Cek console untuk kode OTP)');
+    
+    setTimeout(() => {
+        document.getElementById('displayEmail').textContent = email;
+        showStep(2);
+        startOTPTimer();
+    }, 1500);
+});
+
+// OTP Timer
+function startOTPTimer() {
+    countdownSeconds = 300;
+    updateCountdown();
+    
+    otpTimer = setInterval(() => {
+        countdownSeconds--;
+        updateCountdown();
+        
+        if (countdownSeconds <= 0) {
+            clearInterval(otpTimer);
+            showError('otpError', 'Kode OTP telah kadaluarsa! Silakan kirim ulang.');
+            document.getElementById('resendLink').classList.remove('disabled');
+        }
+    }, 1000);
+}
+
+function updateCountdown() {
+    const minutes = Math.floor(countdownSeconds / 60);
+    const seconds = countdownSeconds % 60;
+    document.getElementById('countdown').textContent = 
+        `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// OTP Input handling
+const otpInputs = document.querySelectorAll('.otp-input');
+otpInputs.forEach((input, index) => {
+    input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
+        }
+    });
+    
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+            otpInputs[index - 1].focus();
+        }
+    });
+});
+
+// Resend OTP
+document.getElementById('resendLink').addEventListener('click', function() {
+    if (this.classList.contains('disabled')) return;
+    
+    registrationData.generatedOTP = "1211";  // OTP tetap 4 digit
+    registrationData.otpExpiry = Date.now() + 300000;
+    
+    console.log('=== OTP RESENT ===');
+    console.log('New OTP Code:', registrationData.generatedOTP);
+    console.log('==================');
+    
+    this.classList.add('disabled');
+    hideError('otpError');
+    showSuccess('otpSuccess', 'Kode OTP baru telah dikirim!');
+    
+    clearInterval(otpTimer);
+    startOTPTimer();
+});
+
+// OTP Verification
+document.getElementById('otpForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    hideError('otpError');
+
+    const enteredOTP = Array.from(otpInputs).map(input => input.value).join('');
+    
+    if (enteredOTP.length !== 4) {
+        showError('otpError', 'Masukkan kode OTP lengkap (4 digit)!');
+        return;
+    }
+
+    // Check if OTP expired
+    if (Date.now() > registrationData.otpExpiry) {
+        showError('otpError', 'Kode OTP telah kadaluarsa! Silakan kirim ulang.');
+        document.getElementById('resendLink').classList.remove('disabled');
+        return;
+    }
+
+    // Verify OTP
+    if (enteredOTP !== registrationData.generatedOTP) {
+        showError('otpError', 'Kode OTP salah! Silakan coba lagi.');
+        otpInputs.forEach(input => input.value = '');
+        otpInputs[0].focus();
+        return;
+    }
+
+    // OTP verified successfully
+    registrationData.otp = enteredOTP;
+    clearInterval(otpTimer);
+    showSuccess('otpSuccess', 'Verifikasi berhasil!');
+    
+    setTimeout(() => {
+        showStep(3);
+    }, 1000);
+});
+
+
+        // Password validation
+        function validatePassword(password) {
+            const errors = [];
+            
+            if (password.length < 8) {
+                errors.push('minimal 8 karakter');
+            }
+            if (!/[A-Z]/.test(password)) {
+                errors.push('minimal 1 huruf besar');
+            }
+            if (!/[a-z]/.test(password)) {
+                errors.push('minimal 1 huruf kecil');
+            }
+            if (!/[0-9]/.test(password)) {
+                errors.push('minimal 1 angka');
+            }
+            
+            return errors;
+        }
+
+        // Real-time password validation
+        document.getElementById('newPassword').addEventListener('input', function() {
+            const password = this.value;
+            const errors = validatePassword(password);
+            
+            if (errors.length > 0 && password.length > 0) {
+                showError('passwordError', 'Password harus memiliki: ' + errors.join(', '));
+            } else {
+                hideError('passwordError');
+            }
+        });
+
+        // Phone number validation
+        document.getElementById('phoneNumber').addEventListener('input', function() {
+            const phone = this.value;
+            if (phone && !/^[0-9]{10,13}$/.test(phone)) {
+                showError('phoneError', 'Nomor telepon harus 10-13 digit angka');
+            } else {
+                hideError('phoneError');
+            }
+        });
+
+        // Personal Data Form submission
+        document.getElementById('personalDataForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            hideError('phoneError');
+            hideError('genderError');
+            hideError('passwordError');
+            hideError('confirmPasswordError');
+            hideError('termsError');
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const gender = document.getElementById('gender').value;
+            const password = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsChecked = document.getElementById('termsCheckbox').checked;
+
+            let hasError = false;
+
+            // Validate full name
+            if (fullName.length < 3) {
+                showError('phoneError', 'Nama harus minimal 3 karakter');
+                hasError = true;
+            }
+
+            // Validate phone number
+            if (!/^[0-9]{10,13}$/.test(phoneNumber)) {
+                showError('phoneError', 'Nomor telepon harus 10-13 digit angka');
+                hasError = true;
+            }
+
+            // Validate gender
+            if (!gender) {
+                showError('genderError', 'Silakan pilih jenis kelamin');
+                hasError = true;
+            }
+
+            // Validate password
+            const passwordErrors = validatePassword(password);
+            if (passwordErrors.length > 0) {
+                showError('passwordError', 'Password harus memiliki: ' + passwordErrors.join(', '));
+                hasError = true;
+            }
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                showError('confirmPasswordError', 'Password tidak cocok!');
+                hasError = true;
+            }
+
+            // Validate terms checkbox
+            if (!termsChecked) {
+                showError('termsError', 'Anda harus menyetujui Terms & Conditions');
+                hasError = true;
+            }
+
+            if (hasError) {
+                return;
+            }
+
+            // Save user data
+            const userData = {
+                email: registrationData.email,
+                fullName: fullName,
+                phoneNumber: phoneNumber,
+                gender: gender,
+                password: password, // In production, this should be hashed!
+                registeredAt: new Date().toISOString()
+            };
+
+            // Get existing users or initialize empty array
+            const existingUsers = JSON.parse(localStorage.getItem('saragaUsers') || '[]');
+            existingUsers.push(userData);
+            localStorage.setItem('saragaUsers', JSON.stringify(existingUsers));
+
+            // Also set current user
+            localStorage.setItem('saragaCurrentUser', JSON.stringify(userData));
+
+            alert('🎉 Registrasi berhasil! Selamat datang di Saraga, ' + fullName + '!');
+            
+            // Redirect to home page
+            // In production: window.location.href = "home-udahlogin.html";
+            // For demo, just show success
+            setTimeout(() => {
+                alert('Anda akan diarahkan ke halaman utama...');
+                showLogin();
+            }, 500);
+        });
+
+        // LOGIN Form
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const users = JSON.parse(localStorage.getItem('saragaUsers') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                alert("❌ Email atau password salah!");
+                return;
+            }
+
+            localStorage.setItem('saragaCurrentUser', JSON.stringify(user));
+            alert("✅ Login berhasil! Selamat datang kembali, " + user.fullName + "!");
+            window.location.href = "home-udahlogin.html";
+        });
+
+        // Google OAuth simulation
+        function loginWithGoogle() {
+            alert('🔄 Google OAuth akan diintegrasikan dengan backend.\n\nUntuk demo, fitur ini mensimulasikan login dengan Google.');
+            
+            // Simulate successful Google login
+            const googleUser = {
+                email: 'user@gmail.com',
+                fullName: 'Google User',
+                phoneNumber: '081234567890',
+                gender: 'male',
+                registeredAt: new Date().toISOString(),
+                loginMethod: 'google'
+            };
+            
+            localStorage.setItem('saragaCurrentUser', JSON.stringify(googleUser));
+            alert('✅ Login dengan Google berhasil!');
+            console.log('Google user logged in:', googleUser);
+        }
+
+        function registerWithGoogle() {
+            alert('🔄 Google OAuth akan diintegrasikan dengan backend.\n\nUntuk demo, registrasi dengan Google akan langsung membuat akun.');
+            
+            // Simulate successful Google registration
+            const googleUser = {
+                email: 'newuser@gmail.com',
+                fullName: 'New Google User',
+                phoneNumber: '081234567890',
+                gender: 'male',
+                registeredAt: new Date().toISOString(),
+                loginMethod: 'google'
+            };
+            
+            const users = JSON.parse(localStorage.getItem('saragaUsers') || '[]');
+            users.push(googleUser);
+            localStorage.setItem('saragaUsers', JSON.stringify(users));
+            localStorage.setItem('saragaCurrentUser', JSON.stringify(googleUser));
+            
+            alert('🎉 Registrasi dengan Google berhasil!');
+            console.log('New Google user registered:', googleUser);
+        }
+
+        // Auto-focus first OTP input when page loads
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.id === 'registerStep2' && 
+                    mutation.target.classList.contains('active')) {
+                    setTimeout(() => otpInputs[0].focus(), 100);
+                }
+            });
+        });
+
+        document.querySelectorAll('.page').forEach(page => {
+            observer.observe(page, { attributes: true, attributeFilter: ['class'] });
+        });
+    </script>
+
+</body>
+</html>

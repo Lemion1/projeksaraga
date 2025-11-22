@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Booking - Saraga</title>
+    <link rel="stylesheet" href="bookpage.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back()">
+                ← Kembali ke Home
+            </button>
+        </div>
+
+        <div class="booking-layout">
+            <div class="venue-section">
+                <div class="venue-header">
+                    <div>
+                        <div class="venue-title">Latansa Futsal Pekanbaru</div>
+                        <div class="venue-location">📍 Tengkerang Utara, 3.5 km away</div>
+                        <span class="status-badge status-available">Available</span>
+                        <div class="info-row">⏰ 08:00 - 24:00 | 📅 6 players max</div>
+                        
+                        <button class="btn-maps" onclick="openGoogleMaps()">
+                            🗺️ Lihat di Maps / Get Directions
+                        </button>
+
+                    </div>
+                    <div class="price-tag">
+                        <div class="price-amount">Rp 80k/hr</div>
+                        <div class="price-label">Peak hours</div>
+                    </div>
+                </div>
+
+                <div class="schedule-section">
+                    <div class="section-title">Pilih Tanggal & Waktu</div>
+                    <div class="date-picker">
+                        <input type="date" id="bookingDate" value="2025-11-12" />
+                    </div>
+
+                    <div class="time-slots" id="timeSlots">
+                        <div class="time-slot booked" data-time="09:00">
+                            <div class="time-slot-time">9:00 AM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot booked" data-time="10:00">
+                            <div class="time-slot-time">10:00 AM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot available" data-time="11:00" data-price="80000">
+                            <div class="time-slot-time">11:00 AM</div>
+                            <div class="time-slot-status">Available</div>
+                        </div>
+                        <div class="time-slot available" data-time="12:00" data-price="100000">
+                            <div class="time-slot-time">12:00 PM</div>
+                            <div class="time-slot-status">Available</div>
+                        </div>
+                        <div class="time-slot booked" data-time="13:00">
+                            <div class="time-slot-time">1:00 PM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot booked" data-time="14:00">
+                            <div class="time-slot-time">2:00 PM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot booked" data-time="15:00" data-price="100000">
+                            <div class="time-slot-time">3:00 PM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot booked" data-time="16:00">
+                            <div class="time-slot-time">4:00 PM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot available" data-time="17:00" data-price="120000">
+                            <div class="time-slot-time">5:00 PM</div>
+                            <div class="time-slot-status">Available</div>
+                        </div>
+                        <div class="time-slot available" data-time="18:00" data-price="140000">
+                            <div class="time-slot-time">6:00 PM</div>
+                            <div class="time-slot-status">Available</div>
+                        </div>
+                        <div class="time-slot booked" data-time="19:00">
+                            <div class="time-slot-time">7:00 PM</div>
+                            <div class="time-slot-status">Booked</div>
+                        </div>
+                        <div class="time-slot available" data-time="20:00" data-price="140000">
+                            <div class="time-slot-time">8:00 PM</div>
+                            <div class="time-slot-status">Available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <div class="cart-title">🛒 Booking Cart</div>
+                
+                <div id="cartEmpty" class="cart-empty">
+                    <div style="font-size: 48px; margin-bottom: 10px;">🏟️</div>
+                    <p>Pilih waktu booking untuk melanjutkan</p>
+                </div>
+
+                <div id="cartItems" style="display: none;"></div>
+
+                <div id="cartSummary" class="cart-summary" style="display: none;">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">Rp 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Service Fee</span>
+                        <span id="serviceFee">Rp 5,000</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span id="total">Rp 0</span>
+                    </div>
+                </div>
+
+                <div id="paymentSection" class="payment-section" style="display: none;">
+                    <div class="section-title">Metode Pembayaran</div>
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="bank">🏦</div>
+                        <div class="payment-method" data-method="ewallet">💳</div>
+                        <div class="payment-method" data-method="paypal">💵</div>
+                    </div>
+                    <button class="checkout-btn" id="checkoutBtn" disabled>Proceed to Checkout</button>
+                </div>
+
+                <div class="confirmation" id="confirmation">
+                    <div class="confirmation-title">
+                        ✅ Booking Confirmed
+                    </div>
+                    <div class="confirmation-text">
+                        Booking ID: #EB2024001<br />
+                        Confirmation sent to email
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-booking-success" id="successModal">
+        <div class="modal-content-success">
+            <div class="modal-icon">🎉</div>
+            <div class="modal-title-success">Booking Berhasil!</div>
+            <div class="modal-body-success">
+                Pesanan Anda telah dikonfirmasi dan akan diarahkan ke halaman My Bookings.
+            </div>
+            <button class="checkout-btn" onclick="window.location.href='booking.html'">Lihat Booking Saya</button>
+        </div>
+    </div>
+
+
+    <script>
+        let cart = [];
+        let selectedPayment = null;
+        const serviceFee = 5000;
+
+        // Time slot selection
+        document.querySelectorAll('.time-slot.available').forEach(slot => {
+            slot.addEventListener('click', function() {
+                if (this.classList.contains('booked')) return;
+                
+                const time = this.dataset.time;
+                const price = parseInt(this.dataset.price);
+                const date = document.getElementById('bookingDate').value;
+
+                // Check if already in cart
+                const existingIndex = cart.findIndex(item => item.time === time);
+                
+                if (this.classList.contains('selected')) {
+                    // Remove from cart
+                    this.classList.remove('selected');
+                    cart.splice(existingIndex, 1);
+                } else {
+                    // Add to cart
+                    this.classList.add('selected');
+                    cart.push({
+                        venue: 'Latansa Futsal Pekanbaru',
+                        date: date,
+                        time: time,
+                        price: price
+                    });
+                }
+                
+                updateCart();
+            });
+        });
+
+        // Payment method selection
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedPayment = this.dataset.method;
+                document.getElementById('checkoutBtn').disabled = false;
+            });
+        });
+
+        // Checkout: MENGGANTI ALERT DENGAN MODAL CARD
+        document.getElementById('checkoutBtn').addEventListener('click', function() {
+            if (cart.length === 0 || !selectedPayment) return;
+            
+            // Tampilkan Modal Card (Ganti alert())
+            document.getElementById('successModal').classList.add('active');
+            
+            // Sembunyikan semua elemen cart/payment
+            document.getElementById('cartSummary').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'none';
+            document.getElementById('cartItems').style.display = 'none';
+            document.getElementById('confirmation').classList.remove('show');
+            
+            // Redirect setelah 2.5 detik
+            setTimeout(() => {
+                window.location.href = 'booking.html'; // Mengarahkan ke halaman My Bookings
+            }, 2500);
+        });
+
+        // NEW: Fungsi untuk membuka Google Maps (Sesuai Diagram)
+        function openGoogleMaps() {
+            const venueName = 'Latansa Futsal Pekanbaru';
+            
+            // SIMULASI KOORDINAT/ALAMAT (Ganti dengan koordinat sebenarnya)
+            const latitude = -0.5186; 
+            const longitude = 101.4468; 
+
+            // Cek koneksi internet (Simulasi Flow Alt 3.4)
+            if (!navigator.onLine) {
+                alert('Tidak dapat membuka Google Maps karena tidak ada koneksi internet. Gunakan navigasi manual.');
+                return;
+            }
+
+            // URL Google Maps untuk rute (Flow 3.1 & 3.2)
+            const mapsUrl = `https://maps.app.goo.gl/TBKmvAzPxCHcG6oW8`;
+
+            // Buka tab baru berisi peta Google Maps
+            window.open(mapsUrl, '_blank');
+        }
+
+        function updateCart() {
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartItems = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+            const paymentSection = document.getElementById('paymentSection');
+
+            if (cart.length === 0) {
+                cartEmpty.style.display = 'block';
+                cartItems.style.display = 'none';
+                cartSummary.style.display = 'none';
+                paymentSection.style.display = 'none';
+                document.getElementById('successModal').classList.remove('active'); // Hide modal if items removed
+                return;
+            }
+
+            cartEmpty.style.display = 'none';
+            cartItems.style.display = 'block';
+            cartSummary.style.display = 'block';
+            paymentSection.style.display = 'block';
+
+            // Render cart items
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div class="cart-item-venue">${item.venue}</div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})">×</button>
+                    </div>
+                    <div class="cart-item-details">
+                        ${formatDate(item.date)} • ${formatTime(item.time)}
+                    </div>
+                    <div class="cart-item-price">Rp ${formatPrice(item.price)}</div>
+                </div>
+            `).join('');
+
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const total = subtotal + serviceFee;
+
+            document.getElementById('subtotal').textContent = 'Rp ' + formatPrice(subtotal);
+            document.getElementById('total').textContent = 'Rp ' + formatPrice(total);
+        }
+
+        function removeFromCart(index) {
+            const item = cart[index];
+            
+            // Unselect time slot
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                if (slot.dataset.time === item.time) {
+                    slot.classList.remove('selected');
+                }
+            });
+            
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function formatPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const options = { day: 'numeric', month: 'short', year: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        function formatTime(time) {
+            const [hours, minutes] = time.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour > 12 ? hour - 12 : hour;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+    </script>
+</body>
+</html>

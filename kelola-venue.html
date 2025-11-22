@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraga - Kelola Venue (Admin)</title>
+    
+    <link rel="stylesheet" href="home-udahlogin.css"> 
+    <style>
+        /* CSS Khusus Halaman Kelola Venue */
+        .admin-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a365d;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .venue-list, .venue-form {
+            padding: 20px 0;
+        }
+
+        .btn-primary {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #5568d3;
+        }
+
+        .btn-secondary {
+            background-color: #f7fafc;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .venue-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .venue-card strong {
+            color: #1a365d;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        
+        /* Layout untuk Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        /* New: Login Container */
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .login-container h2 {
+            color: #1a365d;
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            margin-bottom: 15px;
+        }
+
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar" id="adminNavbar" style="display: none;">
+        <div class="navbar-brand">
+            <img src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" alt="Logo Saraga" class="logo-img">
+            Saraga
+        </div>
+        <div class="search-container">
+            </div>
+        <ul class="nav-menu">
+            <li><a href="home-udahlogin.html">Home</a></li>
+            <li><a href="komunitas.html">Komunitas</a></li>
+            <li><a href="sparring.html">Sparring</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="kelola-venue.html" class="active">Kelola Venue</a></li>
+        </ul>
+        
+        <div class="user-menu">
+             <div class="user-profile">
+                <div class="user-avatar" style="background: #e53e3e;">
+                    <span style="font-size: 1.2rem;">A</span>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Admin Saraga</div>
+                    <div class="user-email">admin@saraga.id</div>
+                </div>
+                <span class="dropdown-icon" onclick="logoutAdmin()">▼</span>
+            </div>
+        </div>
+    </nav>
+
+    <div id="loginSection" class="login-container">
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm">
+            <input type="text" id="adminUsername" class="form-control" placeholder="Username (admin)" required>
+            <input type="password" id="adminPassword" class="form-control" placeholder="Password (12345)" required>
+            <button type="submit" class="btn-primary" style="width: 100%;">Login</button>
+        </form>
+        <div class="error-message" id="loginError" style="margin-top: 15px;"></div>
+    </div>
+
+    <div class="admin-container" id="managementSection" style="display: none;">
+        <h1>Kelola Venue</h1>
+        
+        <div id="venueListSection">
+            <div class="venue-list-header" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <h2>Daftar Venue Aktif</h2>
+                <button class="btn-primary" onclick="showAddVenueForm()">+ Tambah Venue Baru</button>
+            </div>
+
+            <div class="venue-list" id="venueList">
+                </div>
+            
+            <div id="emptyListMessage" style="text-align: center; color: #718096; display: none;">
+                Belum ada venue yang terdaftar. Klik 'Tambah Venue Baru' untuk memulai.
+            </div>
+        </div>
+
+        <div id="addVenueFormSection" style="display: none;">
+            <h2>Tambah Venue Baru</h2>
+            <form id="addVenueForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="venueName">Nama Venue *</label>
+                        <input type="text" id="venueName" name="venueName" required>
+                        <div class="error-message" id="errVenueName">Wajib diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="venueType">Jenis Olahraga *</label>
+                        <input type="text" id="venueType" name="venueType" placeholder="Contoh: Futsal, Badminton" required>
+                        <div class="error-message" id="errVenueType">Wajib diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="venueLocation">Lokasi/Alamat *</label>
+                        <textarea id="venueLocation" name="venueLocation" required></textarea>
+                        <div class="error-message" id="errVenueLocation">Wajib diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="venueOperationalHours">Jam Operasional *</label>
+                        <input type="text" id="venueOperationalHours" name="venueOperationalHours" placeholder="Contoh: 08:00 - 23:00" required>
+                        <div class="error-message" id="errVenueOperationalHours">Wajib diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="venuePrice">Harga (Per jam/Per entry) *</label>
+                        <input type="text" id="venuePrice" name="venuePrice" placeholder="Contoh: Rp 80.000 - Rp 120.000" required>
+                        <div class="error-message" id="errVenuePrice">Wajib diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="venuePhotos">URL Foto Venue</label>
+                        <input type="url" id="venuePhotos" name="venuePhotos" placeholder="Masukkan URL foto">
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn-primary" id="saveButton">Simpan</button>
+                    <button type="button" class="btn-secondary" onclick="showVenueList()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data dan State
+        let venues = JSON.parse(localStorage.getItem('adminVenues')) || [
+            { id: 1, name: "Latansa Futsal Pekanbaru", type: "Futsal", location: "Tengkerang", hours: "08:00 - 24:00", price: "Rp 80.000 - Rp 140.000" },
+            { id: 2, name: "GOR Badminton SAS", type: "Badminton", location: "Tengkerang", hours: "10:00 - 23:00", price: "Rp 80.000 - Rp 120.000" },
+            { id: 3, name: "Pelangi Darma Swimming Pool", type: "Swimming", location: "Marpoyan", hours: "10:00 - 17:00", price: "Rp 10.000 - Rp 30.000" }
+        ];
+        let nextVenueId = venues.length > 0 ? Math.max(...venues.map(v => v.id)) + 1 : 1;
+        const IS_LOGGED_IN_KEY = 'adminLoggedIn';
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+        // --- ADMIN LOGIN LOGIC (Flow 1 - 5) ---
+
+        function checkLoginStatus() {
+            if (localStorage.getItem(IS_LOGGED_IN_KEY) === 'true') {
+                showAdminUI(); // Flow 5: Akses halaman setelah verifikasi
+            } else {
+                showLoginUI(); // Flow 1: Menampilkan halaman login
+            }
+        }
+        
+        function showAdminUI() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('managementSection').style.display = 'block';
+            document.getElementById('adminNavbar').style.display = 'flex';
+            renderVenueList(); // Flow 6.1: Menampilkan daftar venue
+        }
+        
+        function showLoginUI() {
+             document.getElementById('loginSection').style.display = 'block';
+             document.getElementById('managementSection').style.display = 'none';
+             document.getElementById('adminNavbar').style.display = 'none';
+        }
+        
+        function logoutAdmin() {
+            localStorage.removeItem(IS_LOGGED_IN_KEY);
+            alert('Logout sukses. Kembali ke halaman login.');
+            showLoginUI();
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const errorEl = document.getElementById('loginError');
+
+            // Flow 3.1 & 4.1: Validasi
+            if (username === 'admin' && password === '12345') {
+                errorEl.classList.remove('show');
+                localStorage.setItem(IS_LOGGED_IN_KEY, 'true');
+                alert('Login sukses dan langsung terhubung dengan halaman akun.'); // Flow 5: Notifikasi sukses
+                showAdminUI();
+            } else {
+                errorEl.textContent = 'Username atau password salah. Silakan coba lagi.';
+                errorEl.classList.add('show'); // Flow Alt 4.1: Password salah
+            }
+        });
+
+        // --- UI State Management (Flow 7.1 & 7.2) ---
+
+        function showAddVenueForm() {
+            document.getElementById('venueListSection').style.display = 'none';
+            document.getElementById('addVenueFormSection').style.display = 'block'; // Flow 7.2
+            document.getElementById('addVenueForm').reset();
+            hideAllErrors();
+        }
+
+        function showVenueList() {
+            document.getElementById('venueListSection').style.display = 'block'; // Flow 6.2
+            document.getElementById('addVenueFormSection').style.display = 'none';
+            renderVenueList();
+        }
+
+        // --- Rendering Daftar Venue (Flow 6.1) ---
+        function renderVenueList() {
+            const listContainer = document.getElementById('venueList');
+            listContainer.innerHTML = '';
+
+            if (venues.length === 0) {
+                document.getElementById('emptyListMessage').style.display = 'block';
+                return;
+            }
+            document.getElementById('emptyListMessage').style.display = 'none';
+
+
+            venues.forEach(venue => {
+                const card = document.createElement('div');
+                card.className = 'venue-card';
+                card.innerHTML = `
+                    <span>
+                        <strong>${venue.name}</strong> (${venue.type})<br>
+                        <small>Harga: ${venue.price} | Jam Operasional: ${venue.hours}</small>
+                    </span>
+                    <button class="btn-secondary" onclick="deleteVenue(${venue.id})">Hapus</button>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+        
+        function deleteVenue(id) {
+            if (confirm('Anda yakin ingin menghapus venue ini?')) {
+                venues = venues.filter(v => v.id !== id);
+                localStorage.setItem('adminVenues', JSON.stringify(venues));
+                renderVenueList();
+                alert('Venue berhasil dihapus.');
+            }
+        }
+
+        // --- Form Submission dan Validasi (Flow 8 - 10) ---
+        function validateForm(formData) {
+            let isValid = true;
+            hideAllErrors();
+            
+            // Flow Alt 8.1 & 8.3: Cek field wajib diisi (name, type, location, hours, price)
+            for (const [key, value] of Object.entries(formData)) {
+                if (key !== 'venuePhotos' && (!value || value.trim() === '')) {
+                    document.getElementById(`err${key}`).classList.add('show');
+                    isValid = false;
+                }
+            }
+            
+            if (!isValid) {
+                // Flow Alt 8.2: Menampilkan notifikasi error
+                alert('Terdapat field yang wajib diisi dan tidak boleh kosong.'); 
+            }
+            return isValid;
+        }
+        
+        function hideAllErrors() {
+             document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+        }
+
+        document.getElementById('addVenueForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                venueName: document.getElementById('venueName').value,
+                venueType: document.getElementById('venueType').value,
+                venueLocation: document.getElementById('venueLocation').value,
+                venueOperationalHours: document.getElementById('venueOperationalHours').value,
+                venuePrice: document.getElementById('venuePrice').value,
+                venuePhotos: document.getElementById('venuePhotos').value
+            };
+            
+            // Flow 8: Validasi data
+            if (!validateForm(formData)) {
+                return;
+            }
+            
+            // Flow 9: Konfirmasi kepastian data
+            const confirmSave = confirm('Data sudah lengkap dan benar? Klik OK untuk menyimpan.');
+            
+            if (confirmSave) {
+                // Flow 10.1: Simpan data secara tetap (Simulasi)
+                const newVenue = { id: nextVenueId++, ...formData };
+                
+                // Flow Alt 9.1: Simulasi kegagalan penyimpanan (10% chance)
+                if (Math.random() < 0.1) {
+                    alert('Gagal menyimpan data! Koneksi database bermasalah. Silakan coba lagi.');
+                    // Tidak perlu pop karena belum dimasukkan ke array
+                } else {
+                    // Flow 10.2: Mencatat dan validasi
+                    venues.push(newVenue);
+                    localStorage.setItem('adminVenues', JSON.stringify(venues));
+
+                    // Flow 10.3: Pemberitahuan berhasil disimpan
+                    alert('Venue baru berhasil disimpan! Data telah diperbarui.');
+                    showVenueList();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

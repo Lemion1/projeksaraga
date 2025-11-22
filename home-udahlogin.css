@@ -1,0 +1,658 @@
+/* File: lemion1/projeksaraga/projeksaraga-343a77e43ea820db1e1c67c57b817ecfeec5ee2f/home-udahlogin.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Navbar (Disesuaikan agar mirip Komunitas/Sparring/Booking) */
+.navbar {
+    background: white;
+    padding: 15px 40px;
+    display: flex;
+    align-items: center;
+    gap: 30px; /* NEW: Use gap to separate elements */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* NEW: Stronger shadow */
+    position: sticky;
+    top: 0;
+    z-index: 100; /* NEW: Lower z-index for consistency */
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a365d;
+}
+
+.logo-img {
+    width: 40px; /* NEW: Increased size to 40px */
+    height: 40px; /* NEW: Increased size to 40px */
+    border-radius: 8px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333; /* NEW: Darker text color */
+    font-weight: 600; /* NEW: Bolder font weight */
+    transition: color 0.3s;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: #667eea;
+    background-color: transparent;
+}
+
+/* Redefine search container placement */
+.search-container {
+    flex: 1;
+    max-width: 400px;
+    margin: 0; /* REMOVED margin to rely on navbar gap */
+}
+
+.search-box {
+    width: 100%;
+    padding: 10px 20px; /* Increased padding/size for search box */
+    border: 2px solid #e0e0e0; /* Thicker border */
+    border-radius: 25px; /* More rounded corners */
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-box:focus {
+    border-color: #667eea;
+}
+
+/* User Profile Dropdown */
+.user-menu {
+    position: relative;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.user-profile:hover {
+    background-color: #f7fafc;
+}
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #718096;
+}
+
+.dropdown-icon {
+    margin-left: 5px;
+    font-size: 12px;
+    color: #718096;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s;
+}
+
+.user-menu:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #4a5568;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.dropdown-item:first-child {
+    border-radius: 10px 10px 0 0;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 10px 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #f7fafc;
+    color: #667eea;
+}
+
+.dropdown-item.logout {
+    color: #e53e3e;
+}
+
+.dropdown-item.logout:hover {
+    background-color: #fff5f5;
+    color: #c53030;
+}
+
+.dropdown-icon-item {
+    font-size: 18px;
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.notification-badge::after {
+    content: '3';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: #e53e3e;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    color: white;
+    padding: 80px 40px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* Quick Stats Section */
+.quick-stats {
+    max-width: 1200px;
+    margin: -40px auto 40px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.stat-icon.blue {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-icon.green {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.stat-icon.orange {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.stat-info h3 {
+    font-size: 28px;
+    color: #2d3748;
+    margin-bottom: 5px;
+}
+
+.stat-info p {
+    color: #718096;
+    font-size: 14px;
+}
+
+/* Content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.section-title {
+    font-size: 28px;
+    color: #1a202c;
+    margin-bottom: 30px;
+}
+
+/* Sports Icons (Keeping styles but removing section from HTML) */
+.sports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    margin-bottom: 60px;
+}
+
+.sport-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.sport-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: #667eea;
+}
+
+.sport-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.sport-name {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+/* Venues Section */
+.venues-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.venues-header h2 {
+    font-size: 28px;
+    color: #1a202c;
+}
+
+.venues-header p {
+    color: #718096;
+}
+
+.venues-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+.venue-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.venue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.venue-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.venue-info {
+    padding: 20px;
+}
+
+.venue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.venue-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.venue-status {
+    background-color: #48bb78;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.venue-location {
+    color: #718096;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.venue-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.venue-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.venue-time {
+    color: #718096;
+    font-size: 14px;
+}
+
+.venue-extra {
+    text-align: right;
+    color: #718096;
+    font-size: 14px;
+}
+
+.book-btn {
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.book-btn:hover {
+    background-color: #1e40af;
+}
+
+/* Footer */
+.footer {
+    background-color: #1a202c;
+    color: white;
+    padding: 40px 40px 20px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: #a0aec0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: white;
+}
+
+.footer-text {
+    color: #a0aec0;
+}
+
+.newsletter-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.newsletter-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.newsletter-input button {
+    background-color: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    width: 35px;
+    height: 35px;
+    background-color: #2d3748;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.social-icon:hover {
+    background-color: #667eea;
+}
+
+/* NEW: Filter Styling from sparring.css for the filter card */
+.search-filter {
+    max-width: 1200px;
+    margin: -20px auto 40px; /* Diangkat 20px agar menumpang di atas Hero Section */
+    padding: 0 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.filter-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.filter-grid {
+    display: grid;
+    /* 4 kolom default */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    border-color: #667eea;
+}
+
+/* Tombol Cari Lapangan */
+.search-btn-filter {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #1a365d 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.search-btn-filter:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+    .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-filter {
+        padding: 0 20px;
+    }
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+    .nav-menu {
+        display: none;
+    }
+
+    .search-container {
+        margin: 0 15px;
+    }
+
+    .user-info {
+        display: none;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-stats {
+        grid-template-columns: 1fr;
+    }
+}

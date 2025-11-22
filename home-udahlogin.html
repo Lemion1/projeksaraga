@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saraga - Find & Book Your Perfect Sports Venue</title>
+
+    <link rel="stylesheet" href="home-udahlogin.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" alt="Logo Saraga" class="logo-img">
+            Saraga
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Cari lapangan atau lokasi...">
+        </div>
+        <ul class="nav-menu">
+            <li><a href="home-udahlogin.html" class="active">Home</a></li>
+            <li><a href="komunitas.html">Komunitas</a></li>
+            <li><a href="sparring.html">Sparring</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="kelola-venue.html">Kelola Venue</a></li>
+        </ul>
+        
+
+        <div class="user-menu">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://media.discordapp.net/attachments/1387821572051566605/1439955014054576138/image.png?ex=691c661c&is=691b149c&hm=fa6ad40b84ddc0408775f4efe4807766f6279582d4bf8af003f064f06bbd9bc3&=&format=webp&quality=lossless" alt="" srcset="">
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Sulthan Ghalib</div>
+                    <div class="user-email">sulthan.ghalib3001@student.unri.ac.id</div>
+                </div>
+                <span class="dropdown-icon">▼</span>
+            </div>
+            <div class="dropdown-menu">
+                <a href="#profile" class="dropdown-item">
+                    <span class="dropdown-icon-item">👤</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="#bookings" class="dropdown-item">
+                    <span class="dropdown-icon-item">📅</span>
+                    <span>My Bookings</span>
+                </a>
+                <a href="#favorites" class="dropdown-item">
+                    <span class="dropdown-icon-item">❤️</span>
+                    <span>Favorites</span>
+                </a>
+                <a href="#settings" class="dropdown-item">
+                    <span class="dropdown-icon-item">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="#logout" class="dropdown-item logout" onclick="handleLogout(event)">
+                    <span class="dropdown-icon-item">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>Welcome back, Sulthan Ghalib! 👋</h1>
+        <p>Ready to book your next sports session?</p>
+    </section>
+
+    <div class="quick-stats">
+        <div class="stat-card">
+            <div class="stat-icon blue">📅</div>
+            <div class="stat-info">
+                <h3>1</h3>
+                <p>Active Bookings</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">✅</div>
+            <div class="stat-info">
+                <h3>3</h3>
+                <p>Completed Sessions</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">❤️</div>
+            <div class="stat-info">
+                <h3>0</h3>
+                <p>Favorite Venues</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-filter">
+        <div class="filter-card">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Jenis Olahraga</label>
+                    <select id="sportFilter">
+                        <option value="All">Semua Olahraga</option>
+                        <option value="Futsal">Futsal</option>
+                        <option value="Basketball">Basketball</option>
+                        <option value="Badminton">Badminton</option>
+                        <option value="Tennis">Tennis</option>
+                        <option value="Swimming">Swimming</option>
+                        <option value="Billiard">Billiard</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Lokasi</label>
+                    <select id="locationFilter">
+                        <option value="All">Semua Lokasi</option>
+                        <option value="Tengkerang">Tengkerang</option>
+                        <option value="Tampan">Tampan</option>
+                        <option value="Marpoyan">Marpoyan Damai</option>
+                        <option value="Payung">Payung Sekaki</option>
+                        <option value="Bukit">Bukit Raya</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Harga Minimal</label>
+                    <input type="number" id="priceMin" placeholder="Rp 0">
+                </div>
+                <div class="filter-group">
+                    <label>Tanggal</label>
+                    <input type="date" id="dateFilter">
+                </div>
+            </div>
+            <button class="search-btn-filter" onclick="applyFilter()">🔍 Cari Lapangan</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="venues-header">
+            <div>
+                <h2>Recommended for You</h2>
+                <p>Berdasarkan preferensi dan riwayat booking Anda</p>
+            </div>
+        </div>
+
+        <div class="venues-grid" id="venuesGrid">
+            <div class="venue-card" data-sports="Futsal" data-location="Tengkerang">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSynSPzXlxvzz44R5M9Hj5yfU8ln-iljS1rBHDIybIO8rlZJzUbOVp2ROfNYiFvYVs661vaH5PS8mNX4t3wyy61lMbInCaMpo1M85MzaLhdExiJtVFTww6GC4Bf9H7XTFaMiLoQ=s680-w680-h510-rw" class="venue-image">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <div class="venue-name">Latansa Futsal Pekanbaru</div>
+                        <span class="venue-status">Available</span>
+                    </div>
+                    <div class="venue-location">📍 Tengkerang Utara, 3.5 km away</div>
+                    <div class="venue-details">
+                        <div>
+                            <div class="venue-time">8:00 - 24:00</div>
+                            <div class="venue-price">Rp. 80,000 - Rp. 140,000</div>
+                        </div>
+                        <div class="venue-extra">
+                            <div>Available Today</div>
+                            <div>5 slot left</div>
+                        </div>
+                    </div>
+            <button class="book-btn" onclick="window.location.href='bookpage-1.html'">Book Now</button>
+                    
+                </div>
+            </div>
+
+            <div class="venue-card" data-sports="Badminton" data-location="Tengkerang">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSxpIPuh1wYMsjihtPYpeaGmFlPdbsnbFH3MyhZwrg8GEszeJLjiH9Kh3tHb9IEJONl2e2CF93OgJS3ClViXtoWTBdC1MEmx97Bxh5Sm30dfwrqYCzpkM9GE7pGpNtoIX15Wk8Kq=s680-w680-h510-rw" class="venue-image">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <div class="venue-name">GOR Badminton SAS</div>
+                        <span class="venue-status">Available</span>
+                    </div>
+                    <div class="venue-location">📍 Tengkerang Selatan, 3.6 km away</div>
+                    <div class="venue-details">
+                        <div>
+                            <div class="venue-time">10:00 - 23:00</div>
+                            <div class="venue-price">Rp. 80,000 - Rp. 120,000</div>
+                        </div>
+                        <div class="venue-extra">
+                            <div>Available Today</div>
+                            <div>2 slot left</div>
+                        </div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+
+            <div class="venue-card" data-sports="Futsal" data-location="Tampan">
+                <img src="https://asset.ayo.co.id/image/venue/174785185823451.image_cropper_6CD9267E-B099-43C6-A5F4-2C36316D4802-66583-000024BC53D10672.jpg_large.jpeg" class="venue-image">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <div class="venue-name">Benecia Arena</div>
+                        <span class="venue-status" style="background-color: #f59e0b;">Few Slots</span>
+                    </div>
+                    <div class="venue-location">📍 Tampan, 6.0 km away</div>
+                    <div class="venue-details">
+                        <div>
+                            <div class="venue-time">9:00 - 23:00</div>
+                            <div class="venue-price">Rp. 400,000</div>
+                        </div>
+                        <div class="venue-extra">
+                            <div>Available Today</div>
+                            <div>1 slot left</div>
+                        </div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+
+            <div class="venue-card" data-sports="Swimming" data-location="Marpoyan">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSywcQRWIRwRmyApm3Wg6feiwZxX5dYNSA5dcdOriYTQKGYRhs7JNa6GucDXQpgZDfd75IJrMjZHusxVpU_uVbAj8ulSmuvl3eibz9IMS8ASmP679lJdoArXjwoVlDZLKdSwME47=s680-w680-h510-rw" class="venue-image">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <div class="venue-name">Pelangi Darma Swimming Pool</div>
+                        <span class="venue-status">Available</span>
+                    </div>
+                    <div class="venue-location">📍 Marpoyan Damai, 1.5 km away</div>
+                    <div class="venue-details">
+                        <div>
+                            <div class="venue-time">10:00 - 17:00</div>
+                            <div class="venue-price">Rp. 10,000 - Rp. 30,000</div>
+                        </div>
+                        <div class="venue-extra">
+                            <div>Available Today</div>
+                     
+                        </div>
+                    </div>
+            <button class="book-btn" onclick="window.location.href='bookpage-2.html'">Book Now</button>
+                </div>
+            </div>
+
+            <div class="venue-card" data-sports="Basketball" data-location="Payung">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSwhwj2p_ZPxFnRUmyymtMafPtKr-s1sSHXTb-WxtY1TSI8osOK3PRLncMZzH6pgxkgBcFxSgi_QziovioWMm9oO63yg4rpomWtWMTZJVg41HcofjUwamF4WWsOcz0-Celvk4o3E=s680-w680-h510-rw" class="venue-image">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <div class="venue-name">Lapangan Basket 3S Arena</div>
+                        <span class="venue-status">Available</span>
+                    </div>
+                    <div class="venue-location">📍 Payung Sekaki, 6.6 km away</div>
+                    <div class="venue-details">
+                        <div>
+                            <div class="venue-time">10:00 - 23:00</div>
+                            <div class="venue-price">Rp. 80,000 - Rp. 120,000</div>
+                        </div>
+                        <div class="venue-extra">
+                            <div>Available Today</div>
+                            <div>3 slot left</div>
+                        </div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+
+            <div class="venue-card" data-sports="Billiard" data-location="Bukit">
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSzRic-g7nvLg56MYWZMMD6J0Bci4lDtPasUmSYKNWgGUStVkVfKqzbxJYpaBxo7sL8izxr1JL1HesscOkGd8HSuhR_YTC2obSeTgFwJsyMpaOUD-CeVei-N8oRAqvNmuD8UuVFTYt99rK4O=s680-w680-h510-rw" class="venue-image">
+                <div class="venue-info">
+                    <div class="venue-header">
+                        <div class="venue-name">RM Billiard</div>
+                        <span class="venue-status">Available</span>
+                    </div>
+                    <div class="venue-location">📍 Bukit Raya, 3.0 km away</div>
+                    <div class="venue-details">
+                        <div>
+                            <div class="venue-time">9:00 - 23:00</div>
+                            <div class="venue-price">Rp. 40,000 - Rp. 60,000</div>
+                        </div>
+                        <div class="venue-extra">
+                            <div>Available Today</div>
+                            <div>2 slot left</div>
+                        </div>
+                    </div>
+                    <button class="book-btn">Book Now</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="navbar-brand">
+                    <img src="https://media.discordapp.net/attachments/1387821572051566605/1439835024768897106/image.png?ex=691bf65c&is=691aa4dc&hm=b2d7484c7fe0038285562d13420b75c92cbf8159920c3467e82aa51e25e40129&=&format=webp&quality=lossless" class="logo-img">
+                    Saraga
+                </div>
+                <p class="footer-text">Your trusted platform for discovering and booking sports venues across the city.</p>
+                <div class="social-icons">
+                    <div class="social-icon">f</div>
+                    <div class="social-icon">t</div>
+                    <div class="social-icon">in</div>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="chat-admin.html">Contact</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#faq">Returns</a></li>
+                    <li><a href="#shipping">Shipping</a></li>
+                    <li><a href="#safety">Safety</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p class="footer-text">Stay updated with the latest offers and updates directly to your inbox.</p>
+                <div class="newsletter-input">
+                    <input type="email" placeholder="Enter your email">
+                    <button>✓</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Logout handler
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+        window.location.href = "home-belumlogin.html";            }
+        }
+        
+        // Fungsionalitas Filter Lapangan
+        function applyFilter() {
+            // Mengambil nilai dari dropdown
+            const sport = document.getElementById('sportFilter').value;
+            const location = document.getElementById('locationFilter').value;
+            
+            const venueCards = document.querySelectorAll('#venuesGrid .venue-card');
+
+            venueCards.forEach(card => {
+                const cardSports = card.getAttribute('data-sports');
+                const cardLocation = card.getAttribute('data-location');
+                
+                // Logika filter: Harus cocok dengan sport ATAU sport adalah 'All', DAN harus cocok dengan location ATAU location adalah 'All'.
+                const sportMatch = (sport === 'All' || cardSports === sport);
+                const locationMatch = (location === 'All' || cardLocation === location);
+                
+                if (sportMatch && locationMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

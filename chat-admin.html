@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengarahkan ke WhatsApp</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Warna latar belakang gradien Saraga */
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            margin: 0;
+        }
+        .redirect-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+        }
+        .redirect-card h1 {
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        .redirect-card p {
+            color: #4a5568;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        /* Loading Spinner */
+        .loading-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea; /* Warna Saraga Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn-redirect {
+            background: #25D366; /* WhatsApp Green */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-redirect:hover {
+            background: #1faf58;
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-card">
+        <div class="loading-spinner"></div>
+        <h1>Mengarahkan ke WhatsApp...</h1>
+        <p>Anda akan dialihkan ke chat Admin Saraga. Harap tunggu sebentar.</p>
+        
+        <button class="btn-redirect" onclick="window.history.back()">Tutup Jendela</button>
+    </div>
+
+    <script>
+        // MODIFIKASI: Timer sekarang kembali ke halaman sebelumnya setelah 3 detik
+        setTimeout(() => {
+            window.history.back(); 
+        }, 3000); 
+    </script>
+</body>
+</html>
