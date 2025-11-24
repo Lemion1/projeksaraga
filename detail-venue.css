@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
     min-height: 100vh;
     padding: 20px;
 }
@@ -25,7 +25,7 @@ body {
 }
 
 .back-btn {
-    background: #667eea;
+    background: #1e40af;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -39,7 +39,7 @@ body {
 }
 
 .back-btn:hover {
-    background: #5568d3;
+    background: #1e40af;
 }
 
 .venue-detail-layout {
@@ -279,4 +279,5 @@ body {
         width: 80px;
         height: 60px;
     }
+
 }
