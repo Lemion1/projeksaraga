@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Detail Venue - Latansa Futsal</title>
+    <link rel="stylesheet" href="bookpage.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back()">
+                ← Kembali ke Home
+            </button>
+        </div>
+
+        <div class="venue-detail-layout">
+            <div class="main-info-section">
+                <div class="venue-title-bar">
+                    <div class="venue-title">Latansa Futsal Pekanbaru</div>
+                    <div class="venue-price-tag">
+                        Rp 80k/hr
+                        <div class="price-label">Harga Mulai</div>
+                    </div>
+                </div>
+
+                <div class="venue-gallery">
+                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSynSPzXlxvzz44R5M9Hj5yfU8ln-iljS1rBHDIybIO8rlZJzUbOVp2ROfNYiFvYVs661vaH5PS8mNX4t3wyy61lMbInCaMpo1M85MzaLhdExiJtVFTww6GC4Bf9H7XTFaMiLoQ=s680-w680-h510-rw" alt="Foto Utama Latansa Futsal" class="main-photo" />
+                    <div class="thumbnail-photos">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJwyaYWAjo8WNexg3enWq8cH8m4Mb9S8dADQ&s" alt="Thumbnail 1" />
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipMJal6YmkdtkWexlUvf5sKvhZ5YdGibsSTijpre=w426-h240-k-no" alt="Thumbnail 2" />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJHM64YHxvo64g04iwQGfjaXsC7-uXLewkVQ&s" alt="Thumbnail 3" />
+                    </div>
+                    <div class="info-row">
+                        <span class="status-badge status-available">Available</span>
+                        <span>⏰ 08:00 - 24:00</span>
+                        <span>📅 6 pemain maks.</span>
+                    </div>
+                </div>
+
+                <div class="description-section">
+                    <div class="section-title">Tentang Latansa Futsal</div>
+                    <p>
+                        Latansa Futsal menyediakan lapangan futsal berkualitas tinggi dengan matras sintetis terbaik di Pekanbaru. Lokasi strategis, fasilitas lengkap, dan lingkungan yang nyaman membuat Latansa Futsal pilihan ideal untuk sesi latihan atau pertandingan seru bersama teman-teman Anda. Booking slot Anda sekarang!
+                    </p>
+                </div>
+
+                <div class="facility-section">
+                    <div class="section-title">Fasilitas</div>
+                    <div class="facility-list">
+                        <span>✅ Lapangan Matras Kualitas Premium</span>
+                        <span>🚿 Kamar Mandi Bersih</span>
+                        <span>🅿️ Area Parkir Luas</span>
+                        <span>☕ Kantin / Warung</span>
+                        <span>💡 Pencahayaan LED Malam Hari</span>
+                        <span>🕌 Musholla</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="location-card">
+                    <div class="section-title">Lokasi Venue</div>
+                    <div class="venue-location">📍 Tengkerang Utara, 3.5 km jauhnya</div>
+                    
+                    <div class="google-map-embed">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.66547804088!2d101.4566490744744!3d0.501515363716267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5ae967f11da73%3A0x79667382094e1b85!2sLatansa%20Futsal%20Pekanbaru!5e0!3m2!1sid!2sid!4v1763896578789!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div>
+
+                    <button class="btn-maps" onclick="openGoogleMaps()">
+                        🗺️ Lihat di Maps / Get Directions
+                    </button>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-whatsapp" onclick="openWhatsApp()">
+                        💬 Hubungi Pemilik (WA)
+                    </button>
+                    <button class="btn-book-now" onclick="window.location.href='bookpage-1.html'">
+                        BOOK NOW
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Fungsi untuk membuka Google Maps (seperti sebelumnya)
+        function openGoogleMaps() {
+            const mapsUrl = `https://maps.app.goo.gl/TSDSfpjReXNHNiTS6`; 
+            window.open(mapsUrl, '_blank');
+        }
+
+        // Fungsi untuk membuka WhatsApp (Simulasi nomor pemilik)
+        function openWhatsApp() {
+            const phoneNumber = '6281234567890'; // Ganti dengan nomor WhatsApp pemilik venue yang sebenarnya
+            const message = encodeURIComponent(`Halo, saya ingin bertanya tentang booking Lapangan Futsal di Latansa Futsal Pekanbaru.`);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
