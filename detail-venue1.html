@@ -72,9 +72,14 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button class="btn-whatsapp" onclick="openWhatsApp()">
-                        💬 Hubungi Pemilik (WA)
-                    </button>
+                    <div class="contact-buttons-split">
+                        <button class="btn-whatsapp" onclick="openWhatsApp()">
+                            💬 Chat (WA)
+                        </button>
+                        <button class="btn-call" onclick="openCall()">
+                            📞 Telepon
+                        </button>
+                    </div>
                     <button class="btn-book-now" onclick="window.location.href='bookpage-1.html'">
                         BOOK NOW
                     </button>
@@ -96,6 +101,13 @@
             const message = encodeURIComponent(`Halo, saya ingin bertanya tentang booking Lapangan Futsal di Latansa Futsal Pekanbaru.`);
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
             window.open(whatsappUrl, '_blank');
+        }
+        
+        // NEW: Fungsi untuk membuka panggilan telepon
+        function openCall() {
+            const phoneNumber = '6281234567890'; 
+            // Menggunakan skema 'tel:' untuk memicu aplikasi telepon
+            window.location.href = `tel:${phoneNumber}`; 
         }
     </script>
 </body>
