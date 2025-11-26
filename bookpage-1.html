@@ -141,70 +141,61 @@
         </div>
     </div>
     
-    <div class="modal-booking-success" id="processingModal">
-        <div class="modal-content-processing">
-            <div class="modal-icon-processing">⏳</div>
-            <div class="modal-title-processing">Pembayaran Diproses</div>
-            <div class="modal-body-success">
-                <p>Menunggu pembayaran Anda melalui Virtual Account.</p>
-                <div class="va-details">
-                    <div class="va-row">
-                        <span class="va-label">Metode Pembayaran</span>
-                        <span class="va-value">Virtual Account Mandiri</span>
-                    </div>
-                    <div class="va-row">
-                        <span class="va-label">Nomor Virtual Account</span>
-                        <div>
-                            <span class="va-value" id="vaNumber">8888000100001234</span>
-                            <button class="va-copy-btn" onclick="copyToClipboard('vaNumber')">Salin</button>
-                        </div>
-                    </div>
-                    <div class="va-row">
-                        <span class="va-label">Jumlah Pembayaran</span>
-                        <span class="va-value" id="vaAmount">Rp 0</span>
-                    </div>
-                </div>
-                <p>Harap selesaikan pembayaran sebelum:</p>
-                <div class="countdown-timer" id="paymentCountdown">15:00</div>
-            </div>
-            <button class="checkout-btn" onclick="window.location.href='booking.html'" style="background: #f3f4f6; color: #4b5563;">Kembali ke Booking</button>
-        </div>
-    </div>
-
     <div class="modal-booking-success" id="successModal">
         <div class="modal-content-success">
-            <div class="modal-icon-success">🎉</div>
-            <div class="modal-title-success">Booking Berhasil!</div>
+            <div class="modal-icon">🎉</div>
+            <div class="modal-title-success" style="color: #27ae60;">Booking Berhasil!</div>
             <div class="modal-body-success">
                 Pesanan Anda telah dikonfirmasi dan akan diarahkan ke halaman My Bookings.
             </div>
             <button class="checkout-btn" onclick="window.location.href='booking.html'">Lihat Booking Saya</button>
         </div>
     </div>
-    
-    <div class="modal-booking-success" id="failureModal">
-        <div class="modal-content-failure">
-            <div class="modal-icon-failure">❌</div>
-            <div class="modal-title-failure">Pembayaran Gagal</div>
+
+    <div class="modal-booking-success" id="paymentModal">
+        <div class="modal-content-success" style="max-width: 450px;">
+            <div class="modal-icon" id="paymentIcon">⏳</div>
+            <div class="modal-title-success" style="color: #f59e0b;" id="paymentTitle">Pembayaran Diproses</div>
             <div class="modal-body-success">
-                <p>Waktu pembayaran telah habis atau transaksi dibatalkan.</p>
-                <p>Silakan ulangi proses booking jika Anda masih ingin memesan venue ini.</p>
+                Silakan selesaikan pembayaran sebesar <strong id="paymentTotalVA">Rp 0</strong> sebelum waktu habis.
+                <div style="font-size: 14px; color: #555; margin-top: 10px;">Metode: Virtual Account BCA</div>
             </div>
-            <button class="checkout-btn" style="background: #e53e3e; color: white;" onclick="closeAllModals()">Ulangi Booking</button>
-            <button class="checkout-btn btn-secondary" onclick="window.location.href='home-udahlogin.html'" style="background: #f3f4f6; color: #4b5563; margin-top: 10px;">Cari Venue Lain</button>
+            
+            <div style="padding: 10px 0; margin-bottom: 20px; border: 1px dashed #e2e8f0; border-radius: 8px;">
+                <div style="font-size: 14px; color: #718096;">Nomor Virtual Account</div>
+                <div style="font-size: 24px; font-weight: 700; color: #1a202c; margin: 5px 0;" id="vaNumber">71110008889991211</div>
+                <button class="checkout-btn" id="copyBtn" onclick="copyVirtualAccount()">
+                    Salin VA & Validasi (<span id="countdownTimer">0:06</span>)
+                </button>
+                <div style="font-size: 12px; color: #e53e3e; margin-top: 5px;">*Salin VA sebelum 6 detik untuk validasi berhasil</div>
+            </div>
+            
+            <button class="btn-secondary" onclick="closePaymentModal()">Batalkan Transaksi</button>
         </div>
     </div>
 
+    <div class="modal-booking-success" id="failureModal">
+        <div class="modal-content-success">
+            <div class="modal-icon">❌</div>
+            <div class="modal-title-success" style="color: #e53e3e;">Pembayaran Gagal</div>
+            <div class="modal-body-success">
+                Waktu pembayaran telah habis atau validasi gagal. Booking dibatalkan. Silakan coba lagi.
+            </div>
+            <button class="checkout-btn" style="background: #e53e3e;" onclick="window.location.reload()">Coba Booking Lagi</button>
+        </div>
+    </div>
 
     <script>
         let cart = [];
         let selectedPayment = null;
         const serviceFee = 5000;
-        let paymentTimer; // For payment simulation
-        let countdownInterval; // For visual countdown
-        const PAYMENT_TIME_LIMIT = 900; // 15 minutes in seconds
 
-        // Time slot selection (UNMODIFIED)
+        // NEW GLOBAL VARIABLES
+        let paymentTimer;
+        const paymentDeadline = 6; // seconds
+        let isCopied = false;
+
+        // Time slot selection
         document.querySelectorAll('.time-slot.available').forEach(slot => {
             slot.addEventListener('click', function() {
                 if (this.classList.contains('booked')) return;
@@ -235,7 +226,7 @@
             });
         });
 
-        // Payment method selection (UNMODIFIED)
+        // Payment method selection
         document.querySelectorAll('.payment-method').forEach(method => {
             method.addEventListener('click', function() {
                 document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
@@ -245,150 +236,111 @@
             });
         });
 
-        // NEW: Close Modals and Reset State
-        function closeAllModals() {
-            document.getElementById('processingModal').classList.remove('active');
-            document.getElementById('successModal').classList.remove('active');
-            document.getElementById('failureModal').classList.remove('active');
-            
-            // Re-enable cart section display in case of failure/cancellation
-            if (cart.length > 0) {
-                document.getElementById('cartSummary').style.display = 'block';
-                document.getElementById('paymentSection').style.display = 'block';
-                document.getElementById('cartItems').style.display = 'block';
-            }
-
-            clearInterval(paymentTimer);
-            clearInterval(countdownInterval);
-        }
-
-        // NEW: Start Payment Countdown
-        function startCountdown() {
-            let timeLeft = PAYMENT_TIME_LIMIT;
-            const timerEl = document.getElementById('paymentCountdown');
-            
-            clearInterval(countdownInterval);
-            countdownInterval = setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                timeLeft--;
-
-                if (timeLeft < 60) {
-                    timerEl.style.color = '#e53e3e'; // Merah saat 1 menit terakhir
-                } else {
-                    timerEl.style.color = '#1a202c'; // Warna normal
-                }
-
-                if (timeLeft < 0) {
-                    clearInterval(countdownInterval);
-                    handlePaymentResult(false); // Force failure if time runs out
-                }
-            }, 1000);
-        }
-
-        // NEW: Handle Payment Result (Simulated)
-        function handlePaymentResult(isSuccess) {
-            clearInterval(paymentTimer);
-            clearInterval(countdownInterval);
-            document.getElementById('processingModal').classList.remove('active'); // Hide processing modal
-            
-            if (isSuccess) {
-                // Show Success Modal
-                document.getElementById('successModal').classList.add('active');
-                
-                // Mark selected slots as booked permanently
-                 document.querySelectorAll('.time-slot.selected').forEach(slot => {
-                    slot.classList.add('booked');
-                    slot.classList.remove('selected');
-                });
-
-                // Simulate redirection after successful payment confirmation
-                setTimeout(() => {
-                    window.location.href = 'booking.html'; 
-                }, 2500);
-
-            } else {
-                // Show Failure Modal
-                document.getElementById('failureModal').classList.add('active');
-                
-                // Clear selections on failure
-                document.querySelectorAll('.time-slot.selected').forEach(slot => {
-                    slot.classList.remove('selected');
-                    slot.classList.remove('booked'); // Remove temporary booked status
-                });
-            }
-        }
-        
-        // NEW: Copy to Clipboard function
-        function copyToClipboard(elementId) {
-            const textToCopy = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(textToCopy);
-            alert('Nomor Virtual Account disalin: ' + textToCopy);
-        }
-        
-        // MODIFIED: Checkout Logic
+        // Checkout: MENGGANTI LOGIKA LAMA DENGAN FLOW PEMBAYARAN VA BARU
         document.getElementById('checkoutBtn').addEventListener('click', function() {
             if (cart.length === 0 || !selectedPayment) return;
             
+            // Calculate total for display in VA modal
             const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
             const total = subtotal + serviceFee;
-            
-            // 1. Mark selected slots as 'booked' temporarily during processing
-            document.querySelectorAll('.time-slot.selected').forEach(slot => {
-                slot.classList.add('booked');
-            });
 
-            // 2. Hide cart/payment sections
+            // Update VA modal total text
+            document.getElementById('paymentTotalVA').textContent = 'Rp ' + formatPrice(total);
+
+            // Sembunyikan semua elemen cart/payment
             document.getElementById('cartSummary').style.display = 'none';
             document.getElementById('paymentSection').style.display = 'none';
             document.getElementById('cartItems').style.display = 'none';
             document.getElementById('confirmation').classList.remove('show');
+            document.getElementById('successModal').classList.remove('active');
+            document.getElementById('failureModal').classList.remove('active');
             
-            // 3. Show Processing Modal
-            document.getElementById('vaAmount').textContent = 'Rp ' + formatPrice(total);
-            document.getElementById('processingModal').classList.add('active');
+            // Tampilkan Modal Pembayaran
+            document.getElementById('paymentModal').classList.add('active');
             
-            // Start countdown
-            startCountdown();
-
-            // 4. Start Payment Simulation (20% chance of failure after 5 seconds)
-            // Simulating user sending balance to VA
-            paymentTimer = setTimeout(() => {
-                const isSuccess = Math.random() > 0.2; // 80% success chance
-                handlePaymentResult(isSuccess);
-            }, 5000); // Wait 5 seconds to simulate payment processing
+            // Reset state dan mulai timer
+            isCopied = false; 
+            startPaymentTimer();
         });
         
-        // NEW: Close modal when clicking outside (added for new modals)
-        document.getElementById('processingModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                // Do not automatically close processing modal, user must click button or time runs out
-            }
-        });
+        // NEW: Timer & Validation Logic
+        function startPaymentTimer() {
+            let timeLeft = paymentDeadline;
+            const timerEl = document.getElementById('countdownTimer');
+            const copyBtn = document.getElementById('copyBtn');
+
+            // Reset button text
+            copyBtn.innerHTML = `Salin VA & Validasi (<span id="countdownTimer">0:0${timeLeft}</span>)`;
+            copyBtn.disabled = false;
+            
+            timerEl.textContent = `0:0${timeLeft}`;
+            
+            paymentTimer = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = `0:0${timeLeft}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(paymentTimer);
+                    copyBtn.disabled = true;
+
+                    // Jika belum disalin, pembayaran gagal
+                    if (!isCopied) {
+                        showFailureModal();
+                    }
+                }
+            }, 1000);
+        }
         
-        document.getElementById('failureModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAllModals();
-            }
-        });
+        function copyVirtualAccount() {
+            if (isCopied) return;
+            
+            isCopied = true;
+            clearInterval(paymentTimer);
+            
+            const vaNumber = document.getElementById('vaNumber').textContent;
+            
+            // Simulate successful copy
+            // Note: window.navigator.clipboard.writeText only works in secure contexts (HTTPS/localhost)
+            // We use alert as confirmation in this simulation.
+            
+            // Simulate successful copy and validation (Success condition)
+            
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.innerHTML = 'VA Disalin!';
+            copyBtn.disabled = true;
+            
+            // Simulate processing time
+            setTimeout(() => {
+                document.getElementById('paymentModal').classList.remove('active');
+                showSuccessModal();
+            }, 1000); 
+        }
         
-        document.getElementById('successModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                // Automatically redirects on timer, no need to handle manual close
-            }
-        });
+        function showSuccessModal() {
+            document.getElementById('successModal').classList.add('active');
+            
+            // Redirect setelah 2.5 detik
+            setTimeout(() => {
+                window.location.href = 'booking.html'; // Mengarahkan ke halaman My Bookings
+            }, 2500);
+        }
+        
+        function showFailureModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('failureModal').classList.add('active');
+        }
+        
+        function closePaymentModal() {
+            clearInterval(paymentTimer);
+            document.getElementById('paymentModal').classList.remove('active');
+            
+            // Re-show cart details
+            updateCart(); 
+            
+            alert('Transaksi dibatalkan.');
+        }
 
-
-        // NEW: Close modal when clicking outside (added for new modals)
-        document.getElementById('processingModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                // Do not automatically close processing modal, user must click button or time runs out
-            }
-        });
-
-        // EXISTING: openGoogleMaps function (UNMODIFIED)
+        // NEW: Fungsi untuk membuka Google Maps (Sesuai Diagram)
         function openGoogleMaps() {
             const venueName = 'Latansa Futsal Pekanbaru';
             
@@ -409,7 +361,6 @@
             window.open(mapsUrl, '_blank');
         }
 
-        // EXISTING: updateCart function (MODIFIED SLIGHTLY to use closeAllModals)
         function updateCart() {
             const cartEmpty = document.getElementById('cartEmpty');
             const cartItems = document.getElementById('cartItems');
@@ -421,7 +372,7 @@
                 cartItems.style.display = 'none';
                 cartSummary.style.display = 'none';
                 paymentSection.style.display = 'none';
-                closeAllModals(); // Ensure all modals are closed when cart is cleared
+                document.getElementById('successModal').classList.remove('active'); // Hide modal if items removed
                 return;
             }
 
@@ -451,8 +402,7 @@
             document.getElementById('subtotal').textContent = 'Rp ' + formatPrice(subtotal);
             document.getElementById('total').textContent = 'Rp ' + formatPrice(total);
         }
-        
-        // EXISTING: removeFromCart (UNMODIFIED)
+
         function removeFromCart(index) {
             const item = cart[index];
             
@@ -467,7 +417,6 @@
             updateCart();
         }
 
-        // EXISTING: Helper functions (UNMODIFIED)
         function formatPrice(price) {
             return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
