@@ -141,15 +141,9 @@
         </div>
     </div>
     
-    <div class="modal-booking-success" id="successModal">
-        <div class="modal-content-success">
-            <div class="modal-icon">🎉</div>
-            <div class="modal-title-success">Booking Berhasil!</div>
-            <div class="modal-body-success">
-                Pesanan Anda telah dikonfirmasi dan akan diarahkan ke halaman My Bookings.
+    <div class="modal-booking-success" id="paymentModal">
+        <div class="modal-content-success" id="paymentModalContent">
             </div>
-            <button class="checkout-btn" onclick="window.location.href='booking.html'">Lihat Booking Saya</button>
-        </div>
     </div>
 
 
@@ -199,23 +193,69 @@
             });
         });
 
-        // Checkout: MENGGANTI ALERT DENGAN MODAL CARD
+        // MODIFIED: Checkout Flow (Virtual Account Simulation)
         document.getElementById('checkoutBtn').addEventListener('click', function() {
             if (cart.length === 0 || !selectedPayment) return;
             
-            // Tampilkan Modal Card (Ganti alert())
-            document.getElementById('successModal').classList.add('active');
-            
-            // Sembunyikan semua elemen cart/payment
+            // Calculate Total
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const total = subtotal + serviceFee;
+            const formattedTotal = 'Rp ' + formatPrice(total);
+            const virtualAccount = '88808123456789'; // Dummy VA
+
+            const modal = document.getElementById('paymentModal');
+            const modalContent = document.getElementById('paymentModalContent');
+
+            // 1. Tampilkan modal "Pembayaran Diproses" (Awaiting Payment)
+            modalContent.innerHTML = `
+                <div class="modal-icon" id="paymentIcon" style="color: #f59e0b;">⏳</div>
+                <div class="modal-title-success" style="color: #f59e0b;" id="paymentTitle">Pembayaran Diproses</div>
+                <div class="modal-body-success" id="paymentBody">
+                    <p>Silakan selesaikan pembayaran sebelum batas waktu.</p>
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #e0e0e0; text-align: left;">
+                        <p style="font-size: 14px; color: #718096; margin-bottom: 5px;">Virtual Account Bank Saraga</p>
+                        <strong style="font-size: 20px; color: #1a202c;">${virtualAccount}</strong> 
+                        <span style="font-size: 14px; color: #667eea; margin-left: 10px; cursor: pointer;" onclick="navigator.clipboard.writeText('${virtualAccount}'); alert('Nomor VA disalin!');">📋 Salin</span>
+                        <p style="font-size: 14px; color: #718096; margin-top: 10px;">Total Bayar: <strong style="color: #d97706;">${formattedTotal}</strong></p>
+                    </div>
+                    <p style="font-weight: 600; color: #d32f2f;" id="paymentStatus">Menunggu Pembayaran...</p>
+                    <p style="font-size: 12px; color: #999;">Batas waktu: 30 menit (Simulasi)</p>
+                </div>
+                <button class="checkout-btn" style="background: #a0aec0; cursor: default;" disabled>Tutup (Otomatis)</button>
+            `;
+            modal.classList.add('active');
+
+            // Sembunyikan cart section
             document.getElementById('cartSummary').style.display = 'none';
             document.getElementById('paymentSection').style.display = 'none';
             document.getElementById('cartItems').style.display = 'none';
-            document.getElementById('confirmation').classList.remove('show');
-            
-            // Redirect setelah 2.5 detik
+            document.getElementById('cartEmpty').style.display = 'none';
+
+            // 2. Simulasikan validasi pembayaran setelah 3 detik
             setTimeout(() => {
-                window.location.href = 'booking.html'; // Mengarahkan ke halaman My Bookings
-            }, 2500);
+                // Change status to success
+                document.getElementById('paymentIcon').textContent = '🎉';
+                document.getElementById('paymentIcon').style.color = '#27ae60';
+                document.getElementById('paymentTitle').textContent = 'Booking Berhasil!';
+                document.getElementById('paymentTitle').style.color = '#27ae60';
+
+                // Rebuild content for success state
+                modalContent.innerHTML = `
+                    <div class="modal-icon" style="color: #27ae60;">🎉</div>
+                    <div class="modal-title-success">Booking Berhasil!</div>
+                    <div class="modal-body-success">
+                        <p>Pesanan Anda telah dikonfirmasi (ID: BKG-${Date.now().toString().slice(-6)})!</p>
+                        <p>Akan diarahkan ke halaman My Bookings.</p>
+                    </div>
+                    <button class="checkout-btn" onclick="window.location.href='booking.html'">Lihat Booking Saya</button>
+                `;
+
+                // 3. Redirect ke halaman booking setelah 2.5 detik (setelah success message)
+                setTimeout(() => {
+                    window.location.href = 'booking.html'; 
+                }, 2500);
+
+            }, 6000); // 3 seconds delay for payment simulation
         });
 
         // NEW: Fungsi untuk membuka Google Maps (Sesuai Diagram)
@@ -244,13 +284,14 @@
             const cartItems = document.getElementById('cartItems');
             const cartSummary = document.getElementById('cartSummary');
             const paymentSection = document.getElementById('paymentSection');
+            const paymentModal = document.getElementById('paymentModal');
 
             if (cart.length === 0) {
                 cartEmpty.style.display = 'block';
                 cartItems.style.display = 'none';
                 cartSummary.style.display = 'none';
                 paymentSection.style.display = 'none';
-                document.getElementById('successModal').classList.remove('active'); // Hide modal if items removed
+                paymentModal.classList.remove('active'); // Hide modal if items removed
                 return;
             }
 
