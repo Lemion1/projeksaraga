@@ -8,7 +8,6 @@
 
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-brand">
             <img src="https://github.com/Lemion1/projeksaraga/blob/main/logo.webp?raw=true" alt="Logo Saraga" class="logo-img">
@@ -38,13 +37,11 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <h1>Find Your Perfect Sparring Partner 🤝</h1>
         <p>Connect with athletes who match your skill level and schedule</p>
     </section>
 
-    <!-- Search Filter -->
     <div class="search-filter">
         <div class="filter-card">
             <div class="filter-grid">
@@ -86,7 +83,6 @@
         </div>
     </div>
 
-    <!-- Partners Section -->
     <div class="partners-section">
         <div class="section-header">
             <h2>Available Partners</h2>
@@ -94,8 +90,7 @@
         </div>
 
         <div class="partners-grid" id="partnersGrid">
-            <!-- Partner Cards will be dynamically generated -->
-        </div>
+            </div>
 
         <div class="empty-state" id="emptyState" style="display: none;">
             <div class="empty-state-icon">😔</div>
@@ -104,19 +99,46 @@
         </div>
     </div>
 
-    <!-- Profile Modal -->
     <div class="modal" id="profileModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Profile Partner</h2>
             </div>
             <div class="modal-body" id="modalBody">
-                <!-- Profile details will be dynamically loaded -->
+                </div>
+        </div>
+    </div>
+
+    <div class="modal" id="chatModal">
+        <div class="modal-content chat-content">
+            <div class="modal-header chat-header">
+                <h2 id="chatPartnerName">Chat dengan Partner</h2>
+                <button class="close-chat-btn" onclick="closeChatModal()">×</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message system">
+                    <p>Mulai percakapan dengan mengirim pesan pertama Anda. Selamat berolahraga!</p>
+                </div>
+                <div class="chat-message incoming">
+                    <div class="message-content">
+                        Halo, apakah Anda tertarik sparring futsal minggu depan?
+                    </div>
+                    <span class="message-time">10:00 AM</span>
+                </div>
+                <div class="chat-message outgoing">
+                    <div class="message-content">
+                        Hai! Tentu, saya available di hari Rabu atau Jumat malam.
+                    </div>
+                    <span class="message-time">10:05 AM</span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Tulis pesan..." onkeypress="handleChatInput(event)">
+                <button onclick="sendMessage()">Kirim</button>
             </div>
         </div>
     </div>
 
-    <!-- Notification -->
     <div class="notification" id="notification">
         <div class="notification-icon">✅</div>
         <div class="notification-content">
@@ -126,7 +148,7 @@
     </div>
 
     <script>
-        // Sample data
+        // Sample data (Menghapus property phoneNumber)
         const partners = [
             {
                 id: 1,
@@ -222,7 +244,7 @@
 
         let filteredPartners = [...partners];
 
-        // Render partners
+        // Render partners (Diperbarui untuk menyertakan tombol chat)
         function renderPartners(data) {
             const grid = document.getElementById('partnersGrid');
             const emptyState = document.getElementById('emptyState');
@@ -279,6 +301,7 @@
                         </div>
                         <div class="partner-actions">
                             <button class="btn-view" onclick="viewProfile(${partner.id})">View Profile</button>
+                            <button class="btn-chat" onclick="chatPartner(${partner.id})">💬 Chat Partner</button> 
                             <button class="btn-invite" onclick="sendInvite(${partner.id})">Kirim Undangan</button>
                         </div>
                     </div>
@@ -303,7 +326,7 @@
             renderPartners(filteredPartners);
         }
 
-        // View profile
+        // View profile (Diperbarui untuk menyertakan tombol chat di modal)
         function viewProfile(id) {
             const partner = partners.find(p => p.id === id);
             const modal = document.getElementById('profileModal');
@@ -369,6 +392,7 @@
 
                 <div class="modal-actions">
                     <button class="btn-close" onclick="closeModal()">Tutup</button>
+                    <button class="btn-chat" onclick="chatPartner(${partner.id}); closeModal();">💬 Chat Partner</button> 
                     <button class="btn-send-invite" onclick="sendInvite(${partner.id}); closeModal();">Kirim Undangan Sparring</button>
                 </div>
             `;
@@ -381,7 +405,90 @@
             document.getElementById('profileModal').classList.remove('active');
         }
 
-        // Send invite
+        // NEW: Fungsi untuk membuka modal chat
+        function chatPartner(id) {
+            const partner = partners.find(p => p.id === id);
+            const chatModal = document.getElementById('chatModal');
+            const chatBody = document.getElementById('chatBody');
+            
+            // Set nama partner di header modal
+            document.getElementById('chatPartnerName').textContent = `Chat dengan ${partner.name}`;
+
+            // Clear and load simulated chat history
+            chatBody.innerHTML = `
+                <div class="chat-message system">
+                    <p>Mulai percakapan dengan mengirim pesan pertama Anda. Selamat berolahraga!</p>
+                </div>
+                <div class="chat-message incoming">
+                    <div class="message-content">
+                        Halo, apakah Anda tertarik sparring ${partner.sport} minggu depan?
+                    </div>
+                    <span class="message-time">10:00 AM</span>
+                </div>
+                <div class="chat-message outgoing">
+                    <div class="message-content">
+                        Hai ${partner.name}! Tentu, saya available di hari ${partner.availability.split(',')[0]}.
+                    </div>
+                    <span class="message-time">10:05 AM</span>
+                </div>
+            `;
+            
+            // Set focus ke input chat
+            setTimeout(() => {
+                document.getElementById('chatInput').focus();
+                chatBody.scrollTop = chatBody.scrollHeight; // Scroll ke bawah
+            }, 100);
+
+            // Tampilkan modal chat
+            chatModal.classList.add('active');
+        }
+
+        // NEW: Fungsi untuk menutup modal chat
+        function closeChatModal() {
+            document.getElementById('chatModal').classList.remove('active');
+        }
+
+        // NEW: Fungsi untuk mengirim pesan (simulasi)
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            const chatBody = document.getElementById('chatBody');
+            
+            if (message === '') return;
+
+            // Tambahkan pesan yang dikirim
+            const newMessage = document.createElement('div');
+            newMessage.className = 'chat-message outgoing';
+            newMessage.innerHTML = `
+                <div class="message-content">${message}</div>
+                <span class="message-time">${new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span>
+            `;
+            chatBody.appendChild(newMessage);
+            
+            chatInput.value = ''; // Kosongkan input
+            chatBody.scrollTop = chatBody.scrollHeight; // Scroll ke bawah
+
+            // Simulasi balasan dari partner setelah 1.5 detik
+            setTimeout(() => {
+                const replyMessage = document.createElement('div');
+                replyMessage.className = 'chat-message incoming';
+                replyMessage.innerHTML = `
+                    <div class="message-content">Oke, saya akan cek jadwal venue dan kabari Anda!</div>
+                    <span class="message-time">${new Date(Date.now() + 60000).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span>
+                `;
+                chatBody.appendChild(replyMessage);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1500);
+        }
+
+        // NEW: Handle Enter key press
+        function handleChatInput(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Send invite (tetap ada)
         function sendInvite(id) {
             const partner = partners.find(p => p.id === id);
             
@@ -398,23 +505,28 @@
                 if (accepted) {
                     showNotification(
                         'Undangan Diterima! 🎉',
-                        `${partner.name} menerima undangan Anda. Match telah dibuat!`
+                        `${partner.name} menerima undangan Anda. Match telah dibuat!`,
+                        '🎉'
                     );
                 } else {
                     showNotification(
                         'Undangan Ditolak 😔',
-                        `${partner.name} menolak undangan karena jadwal tidak sesuai`
+                        `${partner.name} menolak undangan karena jadwal tidak sesuai`,
+                        '😔'
                     );
                 }
             }, 3000);
         }
 
-        // Show notification
-        function showNotification(title, message) {
+        // Show notification (Diperbarui untuk menerima ikon)
+        function showNotification(title, message, icon = '✅') {
             const notification = document.getElementById('notification');
             document.getElementById('notifTitle').textContent = title;
             document.getElementById('notifMessage').textContent = message;
             
+            // Set ikon notifikasi
+            notification.querySelector('.notification-icon').textContent = icon; 
+
             notification.classList.add('active');
             
             setTimeout(() => {
@@ -428,6 +540,13 @@
                 closeModal();
             }
         });
+        
+        // NEW: Close Chat modal when clicking outside
+        document.getElementById('chatModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeChatModal();
+            }
+        });
 
         // Initialize
         renderPartners(filteredPartners);
@@ -435,4 +554,3 @@
 </body>
 
 </html>
-
