@@ -227,13 +227,30 @@ body {
     gap: 15px;
 }
 
-.btn-whatsapp {
+/* NEW: Split Contact Buttons Layout */
+.contact-buttons-split {
+    display: flex; /* Arrange buttons horizontally */
+    gap: 15px;    /* Maintain the same gap as the main action-buttons container */
     width: 100%;
+}
+
+.contact-buttons-split button {
+    flex: 1; /* Make both buttons take equal width */
     padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+}
+/* END NEW */
+
+
+.btn-whatsapp {
     background: #25d366; /* Warna WhatsApp */
     color: white;
     border: none;
-    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
@@ -242,7 +259,21 @@ body {
 
 .btn-whatsapp:hover {
     background: #1da851;
+    transform: translateY(-2px); /* ADDED: Added hover effect for consistency */
 }
+
+/* NEW: Define the new Call Button style */
+.btn-call {
+    background: #007bff; /* Standard Blue for call */
+    color: white;
+}
+
+.btn-call:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+/* END NEW */
+
 
 .btn-book-now {
     width: 100%;
