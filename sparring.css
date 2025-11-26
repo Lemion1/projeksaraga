@@ -1,3 +1,5 @@
+/* File: lemion1/projeksaraga/projeksaraga-4edb53fa3205816967a6e771a8b0b8580c0b93d0/sparring.css */
+
 * {
             margin: 0;
             padding: 0;
@@ -346,6 +348,24 @@
         .btn-view:hover {
             background: #e0e0e0;
         }
+        
+        /* Modifikasi Styling untuk Tombol Chat Saraga */
+        .btn-chat {
+            flex: 1;
+            padding: 10px;
+            background: #667eea; /* Warna Saraga Blue */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .btn-chat:hover {
+            background: #5568d3; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
 
         .btn-invite {
             flex: 1;
@@ -382,7 +402,7 @@
             background: #2196f3;
         }
 
-        /* Modal */
+        /* Modal (digunakan untuk Profile Modal & Chat Modal) */
         .modal {
             display: none;
             position: fixed;
@@ -556,6 +576,118 @@
             font-size: 14px;
             color: #666;
         }
+        
+        /* === NEW: Chat Modal Styles === */
+        .chat-content {
+            max-width: 450px;
+            padding: 0; /* Remove padding from outer modal-content */
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #1a365d 0%, #667eea 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-chat-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0.8;
+            padding: 0;
+        }
+
+        .close-chat-btn:hover {
+            opacity: 1;
+        }
+
+        .chat-body {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f7f9fc;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .chat-message.incoming {
+            background: #e0e0e0;
+            align-self: flex-start;
+        }
+
+        .chat-message.outgoing {
+            background: #667eea;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-message.system {
+            text-align: center;
+            background: #fff3cd;
+            color: #856404;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 100%;
+        }
+
+        .message-time {
+            display: block;
+            font-size: 10px;
+            margin-top: 5px;
+            text-align: right;
+            color: rgba(0,0,0,0.5);
+        }
+
+        .chat-message.outgoing .message-time {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .chat-input button:hover {
+            background: #5568d3;
+        }
+        /* === END Chat Modal Styles === */
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -576,6 +708,14 @@
 
             .nav-menu {
                 display: none;
+            }
+
+            .partner-actions {
+                flex-direction: column;
+            }
+            .btn-view, .btn-invite, .btn-chat {
+                flex: 1;
+                width: 100%;
             }
 
             .partners-grid {
