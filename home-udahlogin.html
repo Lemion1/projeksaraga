@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -294,7 +293,7 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="chat-admin.html">Contact</a></li>
+                    <li><a href="#" onclick="redirectToWhatsApp('6281378700258', 'chat-admin.html'); return false;">Contact</a></li>
                     <li><a href="#careers">Careers</a></li>
                     <li><a href="#press">Press</a></li>
                 </ul>
@@ -361,10 +360,16 @@
                 }
             });
         }
+        
+        // NEW function for WhatsApp redirection
+        function redirectToWhatsApp(phoneNumber, redirectPage) {
+            const waUrl = `https://wa.me/${phoneNumber}`;
+            // Open WhatsApp link in a new tab/window
+            window.open(waUrl, '_blank'); 
+            // Redirect the current page to the redirectPage (chat-admin.html) to show the message
+            window.location.href = redirectPage;
+        }
     </script>
 </body>
 
 </html>
-
-
-
