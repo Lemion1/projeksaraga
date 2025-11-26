@@ -1,3 +1,4 @@
+/* File: lemion1/projeksaraga/projeksaraga-1f80485bde9286a66257a71cb96849b6e91c3661/bookpage.css */
 
 * {
     margin: 0;
@@ -388,7 +389,7 @@ body {
     font-size: 13px;
 }
 
-/* NEW: Style untuk Modal Sukses (Menggantikan Alert) */
+/* NEW: Style untuk Modal Sukses/Processing/Failure */
 .modal-booking-success {
     display: none; /* Default tersembunyi */
     position: fixed;
@@ -406,7 +407,7 @@ body {
     display: flex;
 }
 
-.modal-content-success {
+.modal-content-success, .modal-content-processing, .modal-content-failure {
     background: white;
     border-radius: 15px;
     padding: 30px;
@@ -417,9 +418,22 @@ body {
     animation: fadeIn 0.3s ease-out;
 }
 
-.modal-icon {
+.modal-icon-success {
     font-size: 60px;
     margin-bottom: 15px;
+    color: #27ae60;
+}
+
+.modal-icon-processing {
+    font-size: 60px;
+    margin-bottom: 15px;
+    color: #f59e0b; /* Orange/Warning color */
+}
+
+.modal-icon-failure {
+    font-size: 60px;
+    margin-bottom: 15px;
+    color: #e53e3e; /* Danger color */
 }
 
 .modal-title-success {
@@ -429,10 +443,75 @@ body {
     margin-bottom: 10px;
 }
 
+.modal-title-processing {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f59e0b;
+    margin-bottom: 10px;
+}
+
+.modal-title-failure {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e53e3e;
+    margin-bottom: 10px;
+}
+
 .modal-body-success {
     font-size: 16px;
     color: #555;
     margin-bottom: 25px;
+}
+
+/* Virtual Account Section */
+.va-details {
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: left;
+    border: 1px dashed #a0aec0;
+}
+
+.va-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.va-label {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.va-value {
+    font-weight: 700;
+    color: #1a202c;
+}
+
+.va-copy-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: 10px;
+}
+
+.va-copy-btn:hover {
+    background: #5568d3;
+}
+
+.countdown-timer {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1a202c;
+    margin-top: 15px;
 }
 
 @keyframes fadeIn {
@@ -451,4 +530,3 @@ body {
     }
 
 }
-
