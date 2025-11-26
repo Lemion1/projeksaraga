@@ -300,10 +300,8 @@
             const vaNumber = document.getElementById('vaNumber').textContent;
             
             // Simulate successful copy
-            // Note: window.navigator.clipboard.writeText only works in secure contexts (HTTPS/localhost)
-            // We use alert as confirmation in this simulation.
-            
-            // Simulate successful copy and validation (Success condition)
+            // Note: In a production environment, you would use navigator.clipboard.writeText 
+            // and rely on a backend webhook for true payment validation.
             
             const copyBtn = document.getElementById('copyBtn');
             copyBtn.innerHTML = 'VA Disalin!';
